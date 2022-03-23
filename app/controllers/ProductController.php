@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Model\Data\Data;
 use App\View;
 
 class ProductController
@@ -39,5 +40,8 @@ class ProductController
         );
         array_push($array, $param);
         echo json_encode($array);
+
+        $data = new Data;
+        $data->execute();
     }
 }

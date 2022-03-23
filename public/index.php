@@ -129,6 +129,7 @@ $Router->get("/contact-form", function () {
 $Router->get("/contact-forms", function () {
   return View::render('contact');
 });
+$Router->post("/contact-form", [SiteHome::class, 'home', $_POST]);
 
 $Router->get('/myblog', ['myblog', 'execute', array('d' => 1)]);
 $Router->get('/myblogs', ['myblog', 'nexecute', array()]);
