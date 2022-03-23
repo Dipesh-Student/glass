@@ -55,7 +55,7 @@
     <!-- content-panel -->
     <div style="display: flex;">
         <div class="left-panel">
-            <h2>Quotation-List</h2>
+            <h2>Challan-List</h2>
             <p>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem incidunt dignissimos dolorum natus quisquam officiis minus nesciunt excepturi consectetur amet reprehenderit, ratione soluta, fugiat quo. Ea saepe velit ex! Ut?
             </p>
@@ -77,7 +77,7 @@
     function load(view) {
         $("#right-panel").show(true);
         $("#right-panel").css("width", "75%");
-        $("#right-panel").load("/quotes/form-" + view);
+        $("#right-panel").load("/challan/form-" + view);
     }
 </script>
 

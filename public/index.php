@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\ChallanController;
 use App\Controllers\ProcessController;
 use App\Controllers\ProductController;
 use App\Controllers\QuoteController;
@@ -31,9 +32,12 @@ $Router->get("/", function () {
   return View::render('home', ['appName' => 'paap']);
 });
 
+/**
+ * 
+ */
 $Router->get("/str", "hello-world");
 
-$Router->get('/hello/{id}/{name}', [SiteHome::class, 'home']);
+$Router->get('/hello/{id:\d+}/{name}', [SiteHome::class, 'home']);
 $Router->get('/profile/{id:\d+}/{username}', [SiteHome::class, 'home']);
 
 $Router->get('/hello', [ProductController::class, 'hello']);
@@ -56,9 +60,9 @@ $Router->groupPrefix('/product', function (Router $Router) {
   });
 
   $Router->post('/add', [ProductController::class, 'addProduct', $_POST]);
+  //sim-ajax-request
   $Router->post('/getProduct', [ProductController::class, 'getProduct', $_POST]);
 });
-//
 
 /**
  * Handle routes group from /process prefix
@@ -86,13 +90,31 @@ $Router->groupPrefix('/quotes', function (Router $Router) {
   $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
 
   $Router->get('/form-add', function () {
-    return View::render('/forms/form-quotes-add');
+    return View::render('/forms/form-quote-add');
   });
   $Router->get('/form-update', function () {
-    return View::render('/forms/form-quotes-update');
+    return View::render('/forms/form-quote-update');
   });
   $Router->get('/form-delete', function () {
-    return View::render('/forms/form-quotes-delete');
+    return View::render('/forms/form-quote-delete');
+  });
+});
+
+/**
+ * Handle routes group from /quotation prefix
+ */
+$Router->groupPrefix('/challan', function (Router $Router) {
+  $Router->get('', [ChallanController::class, 'homeChallan']);
+  $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
+
+  $Router->get('/form-add', function () {
+    return View::render('/forms/form-challan-add');
+  });
+  $Router->get('/form-update', function () {
+    return View::render('/forms/form-challan-update');
+  });
+  $Router->get('/form-delete', function () {
+    return View::render('/forms/form-challan-delete');
   });
 });
 
