@@ -58,6 +58,7 @@ $Router->groupPrefix('/product', function (Router $Router) {
   $Router->post('/add', [ProductController::class, 'addProduct', $_POST]);
   $Router->post('/getProduct', [ProductController::class, 'getProduct', $_POST]);
 });
+//
 
 /**
  * Handle routes group from /process prefix
