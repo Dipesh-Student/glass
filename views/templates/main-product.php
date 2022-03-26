@@ -1,62 +1,5 @@
 <?php include_once(TEMP_PATH_HEADER); ?>
 
-<style>
-    .main-header {
-        display: flex;
-        justify-content: end;
-        margin: 10px 16px;
-    }
-
-    .cus-btn {
-        display: flex;
-        align-items: center;
-        background: none;
-        border: 0;
-        padding: 12px;
-        border-radius: 50%;
-        transition: 0.8s ease;
-    }
-
-    .cus-btn:hover {
-        background-color: #F4F0FA;
-        color: #121212;
-        box-shadow: 5px 2px 12px #ccc;
-    }
-
-    .left-panel,
-    .right-panel {
-        padding: 18px 16px;
-        background-color: #F4F0FA;
-        border-radius: 15px;
-        box-shadow: 2px 2px 6px #ccc;
-        margin: 5px;
-        min-height: 300px;
-    }
-
-    .alert-message {
-        width: 100%;
-        background-color: #d6d8d9;
-        color: #121212;
-        padding: 12px 16px;
-        border-radius: 5px;
-        border: 1px solid #c6c8ca;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .table {
-        border-bottom: 1px solid #6923D0;
-    }
-
-    .tr {
-        color: #6923D0;
-    }
-    .table th{
-        max-width: 50em;
-    }
-</style>
-
 <!--========== CONTENTS ==========-->
 <main>
     <div class="alert alert-message" id="alert-message" role="alert">
@@ -82,7 +25,9 @@
     <!-- content-panel -->
     <div style="display: flex;">
         <div class="left-panel" id="left-panel">
-            <h2>Product-List</h2>
+            <a href="/product?page=1">
+                <h2>Product-List</h2>
+            </a>
 
             <table class="table" id="list-products">
                 <caption>Product-List</caption>
@@ -124,7 +69,6 @@
         } else {
             page = urlParam.get('page');
         }
-        //console.log(recordCount);
 
         $.ajax({
             url: "/product/getProductList",
@@ -134,9 +78,9 @@
                 "recordCount": recordCount
             },
             success: function(result) {
-                console.log(result);
+                //console.log(result);
                 var jsonResult = JSON.parse(result);
-                console.log(jsonResult);
+                //console.log(jsonResult);
 
                 var table = $("#list-products");
 
@@ -226,7 +170,7 @@
 
     function load(view) {
         $("#right-panel").show(true);
-        $("#right-panel").css("width", "75%");
+        $("#right-panel").css("width", "100%");
         $("#right-panel").load("/product/form-" + view);
     }
 </script>

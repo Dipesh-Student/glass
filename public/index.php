@@ -66,6 +66,8 @@ $Router->groupPrefix('/product', function (Router $Router) {
 
   $Router->post('/add', [ProductController::class, 'addProduct', $_POST]);
   //sim-ajax-request
+  $Router->post('/update', [ProductController::class, 'updateProduct', $_POST]);
+  $Router->post('/getProduct', [ProductController::class, 'getProductById', $_POST]);
   $Router->post('/getProductList', [ProductController::class, 'fetchAllProducts', $_POST]);
   $Router->post('/getSearchResult', [ProductController::class, 'getSearchResult', $_POST]);
 });

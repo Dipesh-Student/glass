@@ -10,7 +10,7 @@
                 $htmlDoc['pageTitle'];
             } ?></title>
 
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -25,6 +25,65 @@
     <style>
         main {
             margin-left: 68px;
+        }
+    </style>
+
+    <style>
+        .main-header {
+            display: flex;
+            justify-content: end;
+            margin: 10px 16px;
+        }
+
+        .cus-btn {
+            display: flex;
+            align-items: center;
+            background: none;
+            border: 0;
+            padding: 12px;
+            border-radius: 50%;
+            transition: 0.8s ease;
+        }
+
+        .cus-btn:hover {
+            background-color: #F4F0FA;
+            color: #121212;
+            box-shadow: 5px 2px 12px #ccc;
+        }
+
+        .left-panel,
+        .right-panel {
+            width: 100%;
+            padding: 18px 16px;
+            background-color: #F4F0FA;
+            border-radius: 15px;
+            box-shadow: 2px 2px 6px #ccc;
+            margin: 5px;
+            min-height: 300px;
+        }
+
+        .alert-message {
+            width: 100%;
+            background-color: #d6d8d9;
+            color: #121212;
+            padding: 12px 16px;
+            border-radius: 5px;
+            border: 1px solid #c6c8ca;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .table {
+            border-bottom: 1px solid #6923D0;
+        }
+
+        .tr {
+            color: #6923D0;
+        }
+
+        .table th {
+            max-width: 50em;
         }
     </style>
 

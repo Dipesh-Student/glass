@@ -16,6 +16,13 @@ class ProductController
     {
         return View::render('main-product', $param);
     }
+
+    /**
+     * Add new Product
+     *
+     * @param array $param
+     * @return void
+     */
     public static function addProduct($param = array())
     {
         $productName = $param['product-name'];
@@ -29,15 +36,28 @@ class ProductController
         } else {
             echo $addProduct['errorDescription'];
         }
-        exit;
+        header("Location: /product/form-add");
     }
-    public static function updateProduct()
+    public static function updateProduct($param = array())
     {
-        echo "updateProduct";
+        $pm = new ProductModel();
+        echo json_encode($pm->updateProductDetails(
+            $param['product-id'],
+            $param['product-name'],
+            $param['product-Desc'],
+            $param['product-rate']
+        ));
     }
     public static function deleteProduct()
     {
         echo "deleteProduct";
+    }
+
+    public static function getProductById($param = array())
+    {
+        $productId = $param['product-id'];
+        $pm = new ProductModel();
+        echo json_encode($pm->getProductById($productId));
     }
 
     public static function getSearchResult($param = array())
