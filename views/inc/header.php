@@ -35,7 +35,7 @@
     <!--========== HEADER ==========-->
     <header class="header">
         <div class="header__container">
-            <img src="assets/img/perfil.jpg" alt="" class="header__img">
+            <img src="#" alt="" class="header__img">
 
             <a href="#" class="header__logo">Globe</a>
 
@@ -69,7 +69,7 @@
                         </a>
 
                         <div class="nav__dropdown">
-                            <a href="/product" class="nav__link">
+                            <a href="/product?page=1" class="nav__link">
                                 <i class='bx bx-user nav__icon'></i>
                                 <span class="nav__name">Product</span>
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
@@ -77,9 +77,9 @@
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="/product/add" class="nav__dropdown-item">Add-Product</a>
-                                    <a href="/product/update" class="nav__dropdown-item">Update-Product</a>
-                                    <a href="/product/delete" class="nav__dropdown-item">Remove-Product</a>
+                                    <a href="/product/form-add" class="nav__dropdown-item">Add-Product</a>
+                                    <a href="/product/form-update" class="nav__dropdown-item">Update-Product</a>
+                                    <a href="/product/form-delete" class="nav__dropdown-item">Remove-Product</a>
                                 </div>
                             </div>
                         </div>

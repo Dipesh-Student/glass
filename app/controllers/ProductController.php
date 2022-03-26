@@ -2,19 +2,34 @@
 
 namespace App\Controllers;
 
-use App\Model\Data\Data;
+use App\Model\ProductModel;
 use App\View;
 
 class ProductController
 {
+
+    public function __construct()
+    {
+    }
+
     public static function homeProduct($param = array())
     {
         return View::render('main-product', $param);
     }
     public static function addProduct($param = array())
     {
-        print_r($param);
-        return View::render('Temp-Product', $param);
+        $productName = $param['product-name'];
+        $productDesc = $param['product-Desc'];
+        $productRate = $param['product-rate'];
+        $pm = new ProductModel;
+        $addProduct = $pm->addNewProduct($productName, $productDesc, $productRate);
+
+        if ($addProduct['error'] != true) {
+            echo $addProduct['message'];
+        } else {
+            echo $addProduct['errorDescription'];
+        }
+        exit;
     }
     public static function updateProduct()
     {
@@ -25,23 +40,20 @@ class ProductController
         echo "deleteProduct";
     }
 
-    public static function hello()
+    public static function getSearchResult($param = array())
     {
-        return View::render('hello');
+        $searchKey = $param['search-key'];
+        $pm = new ProductModel();
+        echo json_encode($pm->getSearchKey($searchKey));
     }
 
-    public static function getProduct($param = array())
+    public static function fetchAllProducts($param = array())
     {
+        $pm = new ProductModel();
+        $productList = $pm->getProductList($param['startLimit'], $param['recordCount']);
 
-        $array = array(
-            "dipesh" => "dipesh",
-            "age" => 25,
-            "add" => "virar"
-        );
-        array_push($array, $param);
-        echo json_encode($array);
-
-        $data = new Data;
-        $data->execute();
+        if (($productList['error'] != true) && ($productList['data'] != null)) {
+            echo json_encode($productList['data']);
+        }
     }
 }

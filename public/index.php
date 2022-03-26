@@ -6,6 +6,7 @@ use App\Controllers\ProductController;
 use App\Controllers\QuoteController;
 use App\Handlers\myblog;
 use App\Handlers\SiteHome;
+use App\Model\ProductModel;
 use App\Request;
 use App\Router;
 use App\View;
@@ -50,10 +51,14 @@ $Router->groupPrefix('/product', function (Router $Router) {
   $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
 
   $Router->get('/form-add', function () {
-    return View::render('/forms/form-product-add');
+    $param = array();
+    $param['d'] = 1;
+    return View::render('/forms/form-product-add', $param);
   });
   $Router->get('/form-update', function () {
-    return View::render('/forms/form-product-update');
+    $pm = new ProductModel();
+    $param = $pm->getProductList(1,10);
+    return View::render('/forms/form-product-update', $param);
   });
   $Router->get('/form-delete', function () {
     return View::render('/forms/form-product-delete');
@@ -61,7 +66,8 @@ $Router->groupPrefix('/product', function (Router $Router) {
 
   $Router->post('/add', [ProductController::class, 'addProduct', $_POST]);
   //sim-ajax-request
-  $Router->post('/getProduct', [ProductController::class, 'getProduct', $_POST]);
+  $Router->post('/getProductList', [ProductController::class, 'fetchAllProducts', $_POST]);
+  $Router->post('/getSearchResult', [ProductController::class, 'getSearchResult', $_POST]);
 });
 
 /**
@@ -69,7 +75,7 @@ $Router->groupPrefix('/product', function (Router $Router) {
  */
 $Router->groupPrefix('/process', function (Router $Router) {
   $Router->get('', [ProcessController::class, 'homeProcess']);
-  $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
+  //$Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
 
   $Router->get('/form-add', function () {
     return View::render('/forms/form-process-add');
