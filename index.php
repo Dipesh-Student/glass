@@ -6,5 +6,5 @@ require_once realpath('vendor/autoload.php');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-//header("Location: /public/");
+header("Location: public/");
 echo "root";

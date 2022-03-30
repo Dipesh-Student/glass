@@ -1,10 +1,12 @@
 <?php
 
+session_start();
+
 use App\Controllers\ChallanController;
+use App\Controllers\InvoiceController;
 use App\Controllers\ProcessController;
 use App\Controllers\ProductController;
 use App\Controllers\QuoteController;
-use App\Handlers\myblog;
 use App\Handlers\SiteHome;
 use App\Model\ProductModel;
 use App\Request;
@@ -29,7 +31,7 @@ $Router->addNotFoundHandler(function () {
  * Route home|empty|at path public > index.php
  * shows example with use of anonymous function as handler
  */
-$Router->get("/", function () {
+$Router->get(BASE_DIR, function () {
   return View::render('home', ['appName' => 'paap']);
 });
 
@@ -46,7 +48,7 @@ $Router->get('/hello', [ProductController::class, 'hello']);
 /**
  * Handle routes group from /product prefix
  */
-$Router->groupPrefix('/product', function (Router $Router) {
+$Router->groupPrefix(BASE_DIR . '/product', function (Router $Router) {
   $Router->get('', [ProductController::class, 'homeProduct']);
   $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
 
@@ -57,7 +59,7 @@ $Router->groupPrefix('/product', function (Router $Router) {
   });
   $Router->get('/form-update', function () {
     $pm = new ProductModel();
-    $param = $pm->getProductList(1,10);
+    $param = $pm->getProductList(1, 10);
     return View::render('/forms/form-product-update', $param);
   });
   $Router->get('/form-delete', function () {
@@ -75,13 +77,16 @@ $Router->groupPrefix('/product', function (Router $Router) {
 /**
  * Handle routes group from /process prefix
  */
-$Router->groupPrefix('/process', function (Router $Router) {
+$Router->groupPrefix(BASE_DIR . '/process', function (Router $Router) {
   $Router->get('', [ProcessController::class, 'homeProcess']);
-  //$Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
+
+  $Router->post('/getProcessList', [ProcessController::class, 'getProcessList',$_POST]);
 
   $Router->get('/form-add', function () {
     return View::render('/forms/form-process-add');
   });
+  $Router->post('/form-add', [ProcessController::class, 'addProcess', $_POST]);
+
   $Router->get('/form-update', function () {
     return View::render('/forms/form-process-update');
   });
@@ -124,6 +129,10 @@ $Router->groupPrefix('/challan', function (Router $Router) {
   $Router->get('/form-delete', function () {
     return View::render('/forms/form-challan-delete');
   });
+});
+
+$Router->groupPrefix(BASE_DIR . '/invoice', function (Router $Router) {
+  $Router->get('', [InvoiceController::class, 'homeInvoice']);
 });
 
 /**

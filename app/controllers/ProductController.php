@@ -32,11 +32,11 @@ class ProductController
         $addProduct = $pm->addNewProduct($productName, $productDesc, $productRate);
 
         if ($addProduct['error'] != true) {
-            echo $addProduct['message'];
+            $msg = $addProduct['message'];
         } else {
-            echo $addProduct['errorDescription'];
+            $msg = $addProduct['errorDescription'];
         }
-        header("Location: /product/form-add");
+        header("Location: /glass/public/product/form-add?message=$msg");
     }
     public static function updateProduct($param = array())
     {

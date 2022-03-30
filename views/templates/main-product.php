@@ -1,5 +1,10 @@
 <?php include_once(TEMP_PATH_HEADER); ?>
 
+<style>
+    .fixed-length{
+        width: 40%;
+    }
+</style>
 <!--========== CONTENTS ==========-->
 <main>
     <div class="alert alert-message" id="alert-message" role="alert">
@@ -34,8 +39,9 @@
                 <tr class="tr">
                     <th>Id</th>
                     <th>name</th>
-                    <th>Desc</th>
+                    <th class="fixed-length">Desc</th>
                     <th>rate</th>
+                    <th>Action</th>
                 </tr>
             </table>
             <nav aria-label="...">
@@ -71,14 +77,14 @@
         }
 
         $.ajax({
-            url: "/product/getProductList",
+            url: "<?= BASE_DIR; ?>/product/getProductList",
             type: "POST",
             data: {
                 "startLimit": page,
                 "recordCount": recordCount
             },
             success: function(result) {
-                //console.log(result);
+                console.log(result);
                 var jsonResult = JSON.parse(result);
                 //console.log(jsonResult);
 
@@ -114,8 +120,12 @@
                         `<tr>
                     <th>${productId}</th>
                     <th>${productName}</th>
-                    <th>${productDesc}</th>
+                    <th class="fixed-length">${productDesc}</th>
                     <th>${productRate}</th>
+                    <th>
+                    <a href='http://localhost/glass/public/product/form-update?pid=${productId}'>Edit</a>
+                    <button class="btn btn-outline-danger m-2">Delete</button>
+                    </th>
                     </tr>`
                     );
                 });

@@ -129,7 +129,7 @@ class ProductModel
         }
         $searchKey = '%' . $searchKey . '%';
         try {
-            $sql = "SELECT * FROM `product` WHERE `product_name` LIKE :searchKey LIMIT 6;";
+            $sql = "SELECT * FROM `product` WHERE `product_name` LIKE :searchKey LIMIT 10;";
             $stmt = $this->connection->prepare($sql);
             $stmt->bindParam('searchKey', $searchKey);
             $stmt->execute();

@@ -1,49 +1,52 @@
-<?php include(FORM_HEADER); ?>
+<?php include(TEMP_PATH_HEADER); ?>
+
+<style>
+    .search-result {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        position: absolute;
+        background-color: #ffffff;
+        box-shadow: 2px 2px 8px #ccc;
+        border-radius: 5px;
+        transition: 2s ease;
+    }
+
+    .search-result button {
+        margin: 5px;
+        background: none;
+        border: 0;
+        text-align: left;
+    }
+</style>
 
 <main>
-    <div id="message">
-
-    </div>
+    <section>
+        <h3>Invoice</h3>
+    </section>
     <section>
         <div>
-
             <input type="text" class="form-control mt-4" name="search" id="search-product" placeholder="Search-Product" autocomplete="off">
             <div class="search-result" id="search-result">
 
             </div>
-            <form id="form-update-product" action="<?=BASE_DIR;?>/product/update">
-                <div class="form-group mt-2">
-                    <label for="product-id">Product-Id</label>
-                    <input class="form-control" type="text" name="product-id" id="product-id" disabled>
+        </div>
+        <div>
+            <form id="form-add-invoice" action="<?= BASE_DIR; ?>/product/update">
+
+                <div id="inv">
                 </div>
-                <div class="form-group mt-2">
-                    <label for="product-name">Product-name</label>
-                    <input class="form-control" type="text" name="product-name" id="product-name" placeholder="Product-Name" required>
-                </div>
-                <div class="form-group mt-2">
-                    <label for="product-rate">Product-rate</label>
-                    <input class="form-control" type="number" name="product-rate" step="0.01" id="product-rate" placeholder="Product-Rate" required>
-                </div>
-                <div class="form-group mt-2">
-                    <label for="product-Desc">Product-Desc</label>
-                    <textarea class="form-control" name="product-Desc" cols="30" rows="4" id="product-Desc" required></textarea>
-                </div>
-                <button class="btn btn-primary m-2" type="submit">Update</button>
-                <button class="btn btn-secondary" type="reset">Delete</button>
+
+                <button class="btn btn-primary m-2" type="submit">Save-Invoice</button>
+                <button class="btn btn-secondary" type="reset">Reset</button>
             </form>
         </div>
     </section>
+
 </main>
+
 <script>
     $(document).ready(function() {
-
-        var pageUrl = window.location.search;
-        var urlParam = new URLSearchParams(pageUrl);
-        if (urlParam.get('pid') != null) {
-            loadProduct(urlParam.get('pid'));
-        } else {
-            //page = urlParam.get('page');
-        }
 
         $("#search-product").keyup(function() {
             var search_key = $("#search-product").val();
@@ -68,12 +71,12 @@
                                 var productName = value['product_name'];
                                 $('#search-result').append(
                                     `
-                            <button onclick='loadProduct(${productId})'>${productName}</button>
-                            `
+                    <button onclick='loadProduct(${productId})'>${productName}</button>
+                    `
                                 );
                             });
                         } else {
-                            $("#form-update-product").trigger('reset');
+                            //$("#form-add-invoice").trigger('reset');
                         }
                     },
                     error: function(result) {
@@ -127,7 +130,7 @@
                 "product-id": id
             },
             success: function(result) {
-                console.log(result);
+                //console.log(result);
                 var jsonResult = JSON.parse(result);
 
                 var data = jsonResult['data']['data'];
@@ -138,10 +141,19 @@
                     var productDesc = value['product_desc'];
                     var productRate = value['product_rate'];
 
-                    $("#product-id").val(productId);
-                    $("#product-name").val(productName);
-                    $("#product-rate").val(productRate);
-                    $("#product-Desc").val(productDesc);
+                    $("#form-add-invoice").append(
+                        `
+                        <div id=${productId} class="form-group mt-2">
+                            <input type="number" name="product-id" value="${productId}" id="${productId}product-id">
+                            <input type="text" name="product-dimension" value="" id="${productId}product-dimension" placeholder="Product Dimension">
+                            <input type="number" name="product-tdimension" value="" id="${productId}product-tdimension" placeholder="Total Dimension">
+                            <input type="text" name="pname" value="${productName}" id="${productId}product-name" placeholder="Product Name">
+                            <input type="number" name="prate" value="${productRate}" id="${productId}product-rate" placeholder="Product Rate">
+                            <input type="number" name="pquantity" value="1" id="${productId}product-quantity" placeholder="Product Quantity">
+                            <input type="number" name="total" value="${productRate}" id="${productId}product-total" placeholder="Total">
+                        </div>
+                        `
+                    );
 
                     $("#search-result").html("");
 
@@ -154,4 +166,4 @@
     }
 </script>
 
-<?php include(FORM_FOOTER); ?>
+<?php include(TEMP_PATH_FOOTER); ?>

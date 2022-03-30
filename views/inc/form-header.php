@@ -5,23 +5,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>level-1</title>
+    <title>Hello</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
     <!-- load jquery -->
-    <script src="resources/js/jquery-3.6.0.min.js"></script>
+    <script src="../resources/js/jquery-3.6.0.min.js"></script>
 
     <!-- load bootstrap-css -->
-    <link rel="stylesheet" href="resources/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/bootstrap.min.css">
     <!-- load bootstrap-js -->
-    <script src="resources/bootstrap.min.js"></script>
+    <script src="../resources/bootstrap.min.js"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
-    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="../resources/css/style.css">
 
     <style>
         main {
@@ -86,14 +86,38 @@
         .table th {
             max-width: 50em;
         }
+
+        .active-page {
+            background-color: #6923D0;
+            color: #c6c8ca;
+        }
     </style>
 
+    <style>
+        .search-result {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            position: absolute;
+            background-color: #ffffff;
+            box-shadow: 2px 2px 8px #ccc;
+            border-radius: 5px;
+            transition: 2s ease;
+        }
+
+        .search-result button {
+            margin: 5px;
+            background: none;
+            border: 0;
+            text-align: left;
+        }
+    </style>
 
 </head>
 
 <body>
-    <!--========== HEADER ==========-->
-    <header class="header">
+   <!--========== HEADER ==========-->
+   <header class="header">
         <div class="header__container">
             <img src="#" alt="" class="header__img">
 
@@ -145,7 +169,7 @@
                         </div>
 
                         <div class="nav__dropdown">
-                            <a href="/glass/public/process?page=1" class="nav__link">
+                            <a href="/glass/public/product?page=1" class="nav__link">
                                 <i class='bx bx-user nav__icon'></i>
                                 <span class="nav__name">Process</span>
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
@@ -160,23 +184,27 @@
                             </div>
                         </div>
 
+                        <a href="<?=BASE_DIR;?>/process" class="nav__link">
+                            <i class='bx bx-message-rounded nav__icon'></i>
+                            <span class="nav__name">Process</span>
+                        </a>
                         <a href="#" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Hardware</span>
                         </a>
-                        <a href="<?= BASE_DIR; ?>/quotes" class="nav__link">
+                        <a href="<?=BASE_DIR;?>/quotes" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Quotation's</span>
                         </a>
-                        <a href="<?= BASE_DIR; ?>/challan" class="nav__link">
+                        <a href="<?=BASE_DIR;?>/challan" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Challan</span>
                         </a>
-                        <a href="<?= BASE_DIR; ?>/customer" class="nav__link">
+                        <a href="<?=BASE_DIR;?>/customer" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Customer</span>
                         </a>
-                        <a href="<?= BASE_DIR; ?>/invoice" class="nav__link">
+                        <a href="<?=BASE_DIR;?>/invoice" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Bill/Invoice</span>
                         </a>
