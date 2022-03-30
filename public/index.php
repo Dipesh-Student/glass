@@ -3,11 +3,13 @@
 session_start();
 
 use App\Controllers\ChallanController;
+use App\Controllers\CustomerController;
 use App\Controllers\InvoiceController;
 use App\Controllers\ProcessController;
 use App\Controllers\ProductController;
 use App\Controllers\QuoteController;
 use App\Handlers\SiteHome;
+use App\Model\CustomerModel;
 use App\Model\ProductModel;
 use App\Request;
 use App\Router;
@@ -89,6 +91,27 @@ $Router->groupPrefix(BASE_DIR . '/process', function (Router $Router) {
 
   $Router->get('/form-update', function () {
     return View::render('/forms/form-process-update');
+  });
+  $Router->get('/form-delete', function () {
+    return View::render('/forms/form-process-delete');
+  });
+});
+
+/**
+ * Handle routes group from /process prefix
+ */
+$Router->groupPrefix(BASE_DIR . '/customer', function (Router $Router) {
+  $Router->get('', [CustomerController::class, 'homeCustomer']);
+
+  $Router->post('/getCustomerList', [CustomerController::class, 'getCustomerList',$_POST]);
+
+  $Router->get('/form-add', function () {
+    return View::render('/forms/form-customer-add');
+  });
+  $Router->post('/form-add', [CustomerController::class, 'addCustomer', $_POST]);
+
+  $Router->get('/form-update', function () {
+    return View::render('/forms/form-customer-update');
   });
   $Router->get('/form-delete', function () {
     return View::render('/forms/form-process-delete');

@@ -1,3 +1,0 @@
-<div>
-    challan-delete
-</div>

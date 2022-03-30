@@ -172,10 +172,23 @@
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Challan</span>
                         </a>
-                        <a href="<?= BASE_DIR; ?>/customer" class="nav__link">
-                            <i class='bx bx-message-rounded nav__icon'></i>
-                            <span class="nav__name">Customer</span>
-                        </a>
+
+                        <div class="nav__dropdown">
+                            <a href="/glass/public/customer?page=1" class="nav__link">
+                                <i class='bx bx-user nav__icon'></i>
+                                <span class="nav__name">customer</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="/glass/public/customer/form-add" class="nav__dropdown-item">Add-customer</a>
+                                    <a href="/glass/public/customer/form-update" class="nav__dropdown-item">Update-customer</a>
+                                    <a href="/glass/public/customer/form-delete" class="nav__dropdown-item">Remove-customer</a>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <a href="<?= BASE_DIR; ?>/invoice" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Bill/Invoice</span>

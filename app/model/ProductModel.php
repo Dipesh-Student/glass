@@ -131,7 +131,7 @@ class ProductModel
         try {
             $sql = "SELECT * FROM `product` WHERE `product_name` LIKE :searchKey LIMIT 10;";
             $stmt = $this->connection->prepare($sql);
-            $stmt->bindParam('searchKey', $searchKey);
+            $stmt->bindParam(':searchKey', $searchKey);
             $stmt->execute();
             $totalRecord = $stmt->rowCount();
 
