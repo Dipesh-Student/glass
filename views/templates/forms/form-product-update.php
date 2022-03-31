@@ -1,6 +1,7 @@
 <?php include(FORM_HEADER); ?>
 
 <main>
+    <h3 class="text-center m-4">Update Product</h3>
     <div id="message">
 
     </div>
@@ -11,7 +12,7 @@
             <div class="search-result" id="search-result">
 
             </div>
-            <form id="form-update-product" action="<?=BASE_DIR;?>/product/update">
+            <form id="form-update-product" action="<?= BASE_DIR; ?>/product/update">
                 <div class="form-group mt-2">
                     <label for="product-id">Product-Id</label>
                     <input class="form-control" type="text" name="product-id" id="product-id" disabled>

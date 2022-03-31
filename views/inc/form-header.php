@@ -86,6 +86,23 @@
         .table th {
             max-width: 50em;
         }
+        .search-result {
+            width: 50%;
+            background-color: #ffffff;
+            border-radius: 5px;
+            position: absolute;
+        }
+
+        .search-result button {
+            width: 100%;
+            padding: 5px;
+            background: none;
+            border: 0;
+            text-align: left;
+        }
+        .search-result button:hover {
+            background-color: #d6d8d9;
+        }
     </style>
 
 

@@ -27,9 +27,7 @@
         main {
             margin-left: 68px;
         }
-    </style>
 
-    <style>
         .main-header {
             display: flex;
             justify-content: end;
@@ -56,9 +54,9 @@
         .right-panel {
             width: 100%;
             padding: 18px 16px;
-            background-color: #F4F0FA;
+            background-color: #FFFFFF;
             border-radius: 15px;
-            box-shadow: 2px 2px 6px #ccc;
+            box-shadow: 2px 2px 6px #121212;
             margin: 5px;
             min-height: 300px;
         }
@@ -81,10 +79,25 @@
 
         .tr {
             color: #6923D0;
+            text-transform: capitalize;
         }
 
         .table th {
             max-width: 50em;
+        }
+
+        .table-desc {
+            border: 0;
+            text-align: left;
+            background-color: inherit;
+        }
+
+        .search-result {
+            width: 50%;
+        }
+
+        .search-result button {
+            width: 100%;
         }
     </style>
 
@@ -123,7 +136,7 @@
                     <div class="nav__items">
                         <h3 class="nav__subtitle">Globe</h3>
 
-                        <a href="/" class="nav__link active">
+                        <a href="<?= BASE_DIR; ?>" class="nav__link active">
                             <i class='bx bx-home nav__icon'></i>
                             <span class="nav__name">Home</span>
                         </a>
@@ -188,7 +201,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <a href="<?= BASE_DIR; ?>/invoice" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Bill/Invoice</span>

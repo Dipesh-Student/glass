@@ -1,7 +1,7 @@
 <?php include_once(TEMP_PATH_HEADER); ?>
 
 <style>
-    .fixed-length{
+    .fixed-length {
         width: 40%;
     }
 </style>
@@ -115,12 +115,16 @@
                     var productName = value['product_name'];
                     var productDesc = value['product_desc'];
                     var productRate = value['product_rate'];
-
+                    var shortDesc = productDesc.slice(0,50);
                     table.append(
                         `<tr>
                     <th>${productId}</th>
                     <th>${productName}</th>
-                    <th class="fixed-length">${productDesc}</th>
+                    <th class="fixed-length">
+                    <button type="button" class="table-desc" data-toggle="tooltip" data-placement="bottom" title="${productDesc}">
+                    ${shortDesc}
+                    </button>
+                    </th>
                     <th>${productRate}</th>
                     <th>
                     <a href='http://localhost/glass/public/product/form-update?pid=${productId}'>Edit</a>

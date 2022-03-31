@@ -1,12 +1,8 @@
 <?php include(FORM_HEADER); ?>
 <main>
-    <div class="alert alert-message" id="alert-message" role="alert">
-        <span id="alert-message-span">Hello-world</span>
-        <button onclick="close_message();">X</button>
-    </div>
     <section>
         <div>
-            <?php echo $html_d;?>
+            <h3 class="text-center m-4">Add Product</h3>
             <form id="form-add-product" action="<?= BASE_DIR; ?>/product/add" method="post">
                 <input class="form-control mt-2" type="text" name="product-name" placeholder="Product-Name" required>
                 <input class="form-control mt-2" type="number" name="product-rate" step="0.01" placeholder="Product-Rate" required>

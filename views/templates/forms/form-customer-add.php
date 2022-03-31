@@ -41,7 +41,8 @@
                     $("#message-div").text(result);
                     setInterval(function() {
                         $("#message-div").html("");
-                    }, 5000);
+                        $("#form-add-customer").trigger('reset');
+                    }, 2000);
                 },
                 error: function(result) {
                     console.log(result);

@@ -68,4 +68,34 @@ class ProcessModel
 
         return $returnResult;
     }
+
+    public function getProcessByKey($searchKey){
+        if (empty($searchKey)) {
+            $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No process found", 'data' => null);
+            return $returnResult;
+        }
+        $searchKey = '%' . $searchKey . '%';
+        try {
+            $sql = "SELECT * FROM `process` WHERE `process_name` LIKE :searchKey LIMIT 10;";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':searchKey', $searchKey);
+            $stmt->execute();
+            $totalRecord = $stmt->rowCount();
+
+            if ($stmt->rowCount() != 0) {
+                $returnResult = array(
+                    'error' => false, 'errorDescription' => null, 'message' => "List of Process", 'data' => array(
+                        "totalRecords" => $totalRecord,
+                        "data" => $stmt->fetchAll()
+                    )
+                );
+            } else {
+                $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No process found", 'data' => null);
+            }
+        } catch (PDOException $e) {
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while fetching prcess details', 'data' => null);
+        }
+
+        return $returnResult;
+    }
 }

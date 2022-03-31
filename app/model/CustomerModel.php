@@ -38,12 +38,37 @@ class CustomerModel
         return $returnResult;
     }
 
+    public function updateCustomerDetails(int $customerId, string $customerName, int $customerContact, string $customerEmail, string $customerAdd)
+    {
+        try {
+            $this->connection->beginTransaction();
+            $sql = "UPDATE `customer` 
+            SET `c_name`=:cname,`c_contact`=:ccontact,`c_email`=:cemail,`c_address`=:cadd WHERE `customer_id`=:cid";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':cname', $customerName, PDO::PARAM_STR);
+            $stmt->bindParam(':ccontact', $customerContact, PDO::PARAM_INT);
+            $stmt->bindParam(':cemail', $customerEmail, PDO::PARAM_STR);
+            $stmt->bindParam(':cadd', $customerAdd, PDO::PARAM_STR);
+            $stmt->bindParam(':cid', $customerId, PDO::PARAM_INT);
+
+            $stmt->execute();
+            $this->connection->commit();
+
+            $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "Customer updated", 'data' => null);
+        } catch (PDOException $e) {
+            $this->connection->rollBack();
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while adding new Customer details', 'data' => null);
+        }
+
+        return $returnResult;
+    }
+
     public function getAllCustomer(int $startLimit, int $recordCount)
     {
         if ($startLimit != 0) {
             $startLimit = ($startLimit - 1) * $recordCount;
         }
-        
+
         try {
             $sqlPre = "SELECT * FROM `customer`;";
             $stmtPre = $this->connection->prepare($sqlPre);

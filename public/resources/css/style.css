@@ -10,13 +10,18 @@
     --header-height: 3.5rem;
     --nav-width: 15%;
     /*========== Colors ==========*/
-    --first-color: #6923D0;
-    --first-color-light: #F4F0FA;
+    /* --first-color: #6923D0; */
+    --first-color: #ddd;
+    /* --first-color-light: #F4F0FA; */
+    --first-color-light: #e1e1e1;
     --title-color: #19181B;
-    --text-color: #58555E;
+    /* --text-color: #58555E; */
+    --text-color: #FFFFFF;
     --text-color-light: #A5A1AA;
-    --body-color: #F9F6FD;
-    --container-color: #FFFFFF;
+    /* --body-color: #F9F6FD; */
+    --body-color: #555555;
+    /* --container-color: #FFFFFF; */
+    --container-color: #121212;
     /*========== Font and typography ==========*/
     --body-font: Arial, Helvetica, sans-serif;
     --normal-font-size: .938rem;

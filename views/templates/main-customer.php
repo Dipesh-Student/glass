@@ -85,7 +85,7 @@
                 "recordCount": recordCount
             },
             success: function(result) {
-                console.log(result);
+                //console.log(result);
                 var jsonResult = JSON.parse(result);
                 //console.log(jsonResult);
 

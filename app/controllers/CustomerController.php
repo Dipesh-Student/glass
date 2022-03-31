@@ -19,14 +19,20 @@ class CustomerController
         $addCustomer = $CustomerModel->addNewCustomer($param['cname'], $param['ccontact'], $param['cemail'], $param['cadd']);
         if ($addCustomer['error'] != true) {
             echo $addCustomer['message'];
-        }
-        else{
+        } else {
             echo $addCustomer['errorDescription'];
         }
     }
 
-    public static function updateCustomer()
+    public static function updateCustomer($param = array())
     {
+        $CustomerModel = new CustomerModel();
+        $addCustomer = $CustomerModel->updateCustomerDetails($param['cid'], $param['cname'], $param['ccontact'], $param['cemail'], $param['cadd']);
+        if ($addCustomer['error'] != true) {
+            echo $addCustomer['message'];
+        } else {
+            echo $addCustomer['errorDescription'];
+        }
     }
 
     public static function deleteCustomer()
@@ -57,10 +63,10 @@ class CustomerController
         }
     }
 
-    public static function getCustomerByKey($searchKey)
+    public static function getCustomerByKey($param = array())
     {
-        $cc = new CustomerModel();
-        $getCustomer = $cc->getCustomerByKey($searchKey);
+        $cm = new CustomerModel();
+        $getCustomer = $cm->getCustomerByKey($param['search-key']);
 
         if (($getCustomer['error'] != true) && ($getCustomer['data'] != null)) {
             echo json_encode($getCustomer['data']);

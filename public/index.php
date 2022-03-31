@@ -82,7 +82,7 @@ $Router->groupPrefix(BASE_DIR . '/product', function (Router $Router) {
 $Router->groupPrefix(BASE_DIR . '/process', function (Router $Router) {
   $Router->get('', [ProcessController::class, 'homeProcess']);
 
-  $Router->post('/getProcessList', [ProcessController::class, 'getProcessList',$_POST]);
+  $Router->post('/getProcessList', [ProcessController::class, 'getProcessList', $_POST]);
 
   $Router->get('/form-add', function () {
     return View::render('/forms/form-process-add');
@@ -92,9 +92,13 @@ $Router->groupPrefix(BASE_DIR . '/process', function (Router $Router) {
   $Router->get('/form-update', function () {
     return View::render('/forms/form-process-update');
   });
+  $Router->post('/update', [ProcessController::class, 'updateProcess', $_POST]);
+
   $Router->get('/form-delete', function () {
     return View::render('/forms/form-process-delete');
   });
+
+  $Router->post('/getSearchResult', [ProcessController::class, 'getSearchByKey', $_POST]);
 });
 
 /**
@@ -103,7 +107,7 @@ $Router->groupPrefix(BASE_DIR . '/process', function (Router $Router) {
 $Router->groupPrefix(BASE_DIR . '/customer', function (Router $Router) {
   $Router->get('', [CustomerController::class, 'homeCustomer']);
 
-  $Router->post('/getCustomerList', [CustomerController::class, 'getCustomerList',$_POST]);
+  $Router->post('/getCustomerList', [CustomerController::class, 'getCustomerList', $_POST]);
 
   $Router->get('/form-add', function () {
     return View::render('/forms/form-customer-add');
@@ -113,9 +117,14 @@ $Router->groupPrefix(BASE_DIR . '/customer', function (Router $Router) {
   $Router->get('/form-update', function () {
     return View::render('/forms/form-customer-update');
   });
+
   $Router->get('/form-delete', function () {
     return View::render('/forms/form-process-delete');
   });
+
+  $Router->post('/form-update', [CustomerController::class, 'updateCustomer', $_POST]);
+  $Router->post('/getCustomer', [CustomerController::class, 'getCustomer', $_POST]);
+  $Router->post('/getSearchResult', [CustomerController::class, 'getCustomerByKey', $_POST]);
 });
 
 /**

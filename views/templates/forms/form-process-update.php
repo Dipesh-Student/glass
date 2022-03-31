@@ -1,33 +1,21 @@
 <?php include(FORM_HEADER); ?>
 
 <main>
+    <h3 class="text-center m-4">Update Process</h3>
     <div id="message">
 
     </div>
     <section>
         <div>
 
-            <input type="text" class="form-control mt-4" name="search" id="search-product" placeholder="Search-Product" autocomplete="off">
+            <input type="text" class="form-control mt-4" name="search" id="search-process" placeholder="Search-Process" autocomplete="off">
             <div class="search-result" id="search-result">
 
             </div>
-            <form id="form-update-product" action="<?=BASE_DIR;?>/product/update">
-                <div class="form-group mt-2">
-                    <label for="product-id">Product-Id</label>
-                    <input class="form-control" type="text" name="product-id" id="product-id" disabled>
-                </div>
-                <div class="form-group mt-2">
-                    <label for="product-name">Product-name</label>
-                    <input class="form-control" type="text" name="product-name" id="product-name" placeholder="Product-Name" required>
-                </div>
-                <div class="form-group mt-2">
-                    <label for="product-rate">Product-rate</label>
-                    <input class="form-control" type="number" name="product-rate" id="product-rate" placeholder="Product-Rate" required>
-                </div>
-                <div class="form-group mt-2">
-                    <label for="product-Desc">Product-Desc</label>
-                    <textarea class="form-control" name="product-Desc" cols="30" rows="4" id="product-Desc" required></textarea>
-                </div>
+            <form id="form-update-process" action="<?= BASE_DIR; ?>/process/update">
+                <input class="form-control mt-4" type="text" name="process-id" id="process-id" placeholder="Process Id" disabled required>
+                <input class="form-control mt-2" type="text" name="process-name" placeholder="Process Name" required>
+                <input class="form-control mt-2" type="number" step="0.01" name="process-rate" placeholder="Process Rate" required>
                 <button class="btn btn-primary m-2" type="submit">Update</button>
                 <button class="btn btn-secondary" type="reset">Delete</button>
             </form>
@@ -37,35 +25,36 @@
 <script>
     $(document).ready(function() {
 
-        $("#search-product").keyup(function() {
-            var search_key = $("#search-product").val();
+        $("#search-process").keyup(function() {
+            var search_key = $("#search-process").val();
             var search_result = $('#search-result');
             search_result.text(search_key);
 
             if (search_key != null) {
 
                 $.ajax({
-                    url: "<?= BASE_DIR; ?>/product/getSearchResult",
+                    url: "<?= BASE_DIR; ?>/process/getSearchResult",
                     type: "POST",
                     data: {
                         "search-key": search_key
                     },
                     success: function(result) {
+                        console.log(result);
                         var jsonResult = JSON.parse(result);
                         mydata = jsonResult;
                         $('#search-result').html("");
                         if (jsonResult['data'] != null) {
                             $.each(jsonResult['data']['data'], function(key, value) {
-                                var productId = value['product_id'];
+                                var processId = value['product_id'];
                                 var productName = value['product_name'];
                                 $('#search-result').append(
                                     `
-                            <button onclick='loadProduct(${productId})'>${productName}</button>
+                            <button onclick='loadProcess(${processId})'>${processName}</button>
                             `
                                 );
                             });
                         } else {
-                            $("#form-update-product").trigger('reset');
+                            $("#form-update-process").trigger('reset');
                         }
                     },
                     error: function(result) {
@@ -76,19 +65,18 @@
             }
         });
 
-        $("#form-update-product").submit(function(event) {
+        $("#form-update-process").submit(function(event) {
             event.preventDefault();
 
-            var data = $("#form-update-product").serialize();
+            var data = $("#form-update-process").serialize();
 
             $.ajax({
-                url: "/glass/public/product/update",
+                url: "/glass/public/process/update",
                 type: "POST",
                 data: {
-                    "product-id": $("#product-id").val(),
-                    "product-name": $("#product-name").val(),
-                    "product-Desc": $("#product-Desc").val(),
-                    "product-rate": $("#product-rate").val()
+                    "process-id": $("#product-id").val(),
+                    "process-name": $("#product-name").val(),
+                    "process-rate": $("#product-rate").val()
 
                 },
                 success: function(result) {
