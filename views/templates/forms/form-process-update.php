@@ -14,8 +14,8 @@
             </div>
             <form id="form-update-process" action="<?= BASE_DIR; ?>/process/update">
                 <input class="form-control mt-4" type="text" name="process-id" id="process-id" placeholder="Process Id" disabled required>
-                <input class="form-control mt-2" type="text" name="process-name" placeholder="Process Name" required>
-                <input class="form-control mt-2" type="number" step="0.01" name="process-rate" placeholder="Process Rate" required>
+                <input class="form-control mt-2" type="text" name="process-name" id="process-name" placeholder="Process Name" required>
+                <input class="form-control mt-2" type="number" step="0.01" name="process-rate" id="process-rate" placeholder="Process Rate" required>
                 <button class="btn btn-primary m-2" type="submit">Update</button>
                 <button class="btn btn-secondary" type="reset">Delete</button>
             </form>
@@ -24,6 +24,14 @@
 </main>
 <script>
     $(document).ready(function() {
+
+        var pageUrl = window.location.search;
+        var urlParam = new URLSearchParams(pageUrl);
+        if (urlParam.get('pid') != null) {
+            loadProcess(urlParam.get('pid'));
+        } else {
+            //page = urlParam.get('page');
+        }
 
         $("#search-process").keyup(function() {
             var search_key = $("#search-process").val();
@@ -44,9 +52,9 @@
                         mydata = jsonResult;
                         $('#search-result').html("");
                         if (jsonResult['data'] != null) {
-                            $.each(jsonResult['data']['data'], function(key, value) {
-                                var processId = value['product_id'];
-                                var productName = value['product_name'];
+                            $.each(jsonResult['data'], function(key, value) {
+                                var processId = value['process_id'];
+                                var processName = value['process_name'];
                                 $('#search-result').append(
                                     `
                             <button onclick='loadProcess(${processId})'>${processName}</button>
@@ -71,21 +79,21 @@
             var data = $("#form-update-process").serialize();
 
             $.ajax({
-                url: "/glass/public/process/update",
+                url: "/glass/public/process/form-update",
                 type: "POST",
                 data: {
-                    "process-id": $("#product-id").val(),
-                    "process-name": $("#product-name").val(),
-                    "process-rate": $("#product-rate").val()
+                    "process-id": $("#process-id").val(),
+                    "process-name": $("#process-name").val(),
+                    "process-rate": $("#process-rate").val()
 
                 },
                 success: function(result) {
-                    console.log(result);
+                    //console.log(result);
                     var jsonResult = JSON.parse(result);
 
-                    console.log(jsonResult['message']);
+                    //console.log(jsonResult['message']);
 
-                    $("#message").html(jsonResult['message']);
+                    $("#message").html(result);
 
                     setInterval(function() {
                         $("#message").html("");
@@ -99,29 +107,27 @@
 
     });
 
-    function loadProduct(id) {
+    function loadProcess(id) {
         $.ajax({
-            url: "/glass/public/product/getProduct",
+            url: "/glass/public/process/getProcess",
             type: "POST",
             data: {
-                "product-id": id
+                "process-id": id
             },
             success: function(result) {
-                console.log(result);
+                //console.log(result);
                 var jsonResult = JSON.parse(result);
 
-                var data = jsonResult['data']['data'];
+                var data = jsonResult['data'];
 
                 $.each(data, function(key, value) {
-                    var productId = value['product_id'];
-                    var productName = value['product_name'];
-                    var productDesc = value['product_desc'];
-                    var productRate = value['product_rate'];
+                    var productId = value['process_id'];
+                    var productName = value['process_name'];
+                    var productRate = value['process_rate'];
 
-                    $("#product-id").val(productId);
-                    $("#product-name").val(productName);
-                    $("#product-rate").val(productRate);
-                    $("#product-Desc").val(productDesc);
+                    $("#process-id").val(productId);
+                    $("#process-name").val(productName);
+                    $("#process-rate").val(productRate);
 
                     $("#search-result").html("");
 

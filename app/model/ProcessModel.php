@@ -36,6 +36,29 @@ class ProcessModel
         return $returnResult;
     }
 
+    public function updateProcess($processId, $processName, $processRate)
+    {
+        try {
+            $this->connection->beginTransaction();
+            $sql = "UPDATE `process` 
+            SET `process_name`=:pname,`process_rate`=:prate WHERE `process_id`=:processid";
+            $stmt = $this->connection->prepare($sql);            
+            $stmt->bindParam(':pname', $processName);
+            $stmt->bindParam(':prate', $processRate);
+            $stmt->bindParam(':processid', $processId);
+
+            $stmt->execute();
+            $this->connection->commit();
+
+            $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "Process Updated", 'data' => null);
+        } catch (PDOException $e) {
+            $this->connection->rollBack();
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while updating process', 'data' => null);
+        }
+
+        return $returnResult;
+    }
+
     public function getAllProcessess(int $startLimit, int $recordCount)
     {
         $startLimit = ($startLimit - 1) * $recordCount;
@@ -69,7 +92,8 @@ class ProcessModel
         return $returnResult;
     }
 
-    public function getProcessByKey($searchKey){
+    public function getProcessByKey($searchKey)
+    {
         if (empty($searchKey)) {
             $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No process found", 'data' => null);
             return $returnResult;
@@ -94,6 +118,33 @@ class ProcessModel
             }
         } catch (PDOException $e) {
             $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while fetching prcess details', 'data' => null);
+        }
+
+        return $returnResult;
+    }
+
+    public function getProcessById($processId)
+    {
+
+        try {
+            $sql = "SELECT * FROM `process` WHERE `process_id`=:processid;";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':processid', $processId);
+            $stmt->execute();
+            $totalRecord = $stmt->rowCount();
+
+            if ($stmt->rowCount() != 0) {
+                $returnResult = array(
+                    'error' => false, 'errorDescription' => null, 'message' => "Process data", 'data' => array(
+                        "totalRecords" => $totalRecord,
+                        "data" => $stmt->fetchAll()
+                    )
+                );
+            } else {
+                $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No process found", 'data' => null);
+            }
+        } catch (PDOException $e) {
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while fetching process details', 'data' => null);
         }
 
         return $returnResult;

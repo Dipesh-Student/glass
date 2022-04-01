@@ -78,14 +78,15 @@
                         var data = jsonResult['data'];
                         console.log(data['data']);
                         if (jsonResult['data'] != null) {
-                            $.each(jsonResult['data']['data'], function(key, value) {
-                                var customerId = value['process_id'];
-                                var customerName = value['process_name'];
-                                
+                            $.each(jsonResult['data'], function(key, value) {
+                                var customerId = value['customer_id'];
+                                var customerName = value['c_name'];
+
                                 $('#search-result').append(
                                     `
-                            <button onclick='loadCustomer(${customerId})'>${customerName}</button>
-                            `
+                                    <button onclick='loadCustomer(${customerId})'>${customerName}</button>
+                            
+                                    `
                                 );
                             });
                         } else {
@@ -110,7 +111,7 @@
                 "customer-id": customerId
             },
             success: function(result) {
-                
+
                 var jsonResult = JSON.parse(result);
                 if (jsonResult['data']) {
                     var data = jsonResult['data'];

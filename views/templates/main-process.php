@@ -1,7 +1,7 @@
 <?php include_once(TEMP_PATH_HEADER); ?>
 
 <style>
-    .main-header {
+    /* .main-header {
         display: flex;
         justify-content: end;
         margin: 10px 16px;
@@ -31,7 +31,7 @@
         box-shadow: 2px 2px 6px #ccc;
         margin: 5px;
         min-height: 300px;
-    }
+    } */
 </style>
 
 <!--========== CONTENTS ==========-->
@@ -53,32 +53,24 @@
             </span></button>
     </div>
     <!-- content-panel -->
-    <div style="display: flex;">
-        <div class="left-panel">
-            <h2>Processes-List</h2>
-            <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem incidunt dignissimos dolorum natus quisquam officiis minus nesciunt excepturi consectetur amet reprehenderit, ratione soluta, fugiat quo. Ea saepe velit ex! Ut?
-            </p>
-        </div>
-        <div class="right-panel" id="right-panel">
 
-        </div>
+    <div class="left-panel">
+        <h3><a href="<?= BASE_DIR; ?>/process?page=1">Process List</a></h3>
+        <table class="table" id="list-process">
+            <caption>Process-List</caption>
+            <tr class="tr">
+                <th>Id</th>
+                <th>Process Name</th>
+                <th>Process Rate</th>
+                <th>Action</th>
+            </tr>
+        </table>
+        <nav aria-label="...">
+            <ul class="pagination" id="pagination">
+
+            </ul>
+        </nav>
     </div>
-
-    <table class="table" id="list-products">
-        <caption>Product-List</caption>
-        <tr class="tr">
-            <th>Id</th>
-            <th>name</th>
-            <th>rate</th>
-            <th>Action</th>
-        </tr>
-    </table>
-    <nav aria-label="...">
-        <ul class="pagination" id="pagination">
-
-        </ul>
-    </nav>
 
 </main>
 
@@ -114,7 +106,7 @@
                 var jsonResult = JSON.parse(result);
                 //console.log(jsonResult);
 
-                var table = $("#list-products");
+                var table = $("#list-process");
 
                 var totalRecords = jsonResult['totalRecords'];
                 var totalPagesRequired = Math.ceil(totalRecords / recordCount);
@@ -146,8 +138,11 @@
                         `<tr>
                     <th>${processId}</th>
                     <th>${processName}</th>
-                    
                     <th>${processRate}</th>
+                    <th>
+                    <a href='http://localhost/glass/public/process/form-update?pid=${processId}'>Edit</a>
+                    <button class="btn btn-outline-danger m-2">Delete</button>
+                    </th>
                     </tr>`
                     );
                 });

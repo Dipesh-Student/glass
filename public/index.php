@@ -38,16 +38,6 @@ $Router->get(BASE_DIR, function () {
 });
 
 /**
- * 
- */
-$Router->get("/str", "hello-world");
-
-$Router->get('/hello/{id:\d+}/{name}', [SiteHome::class, 'home']);
-$Router->get('/profile/{id:\d+}/{username}', [SiteHome::class, 'home']);
-
-$Router->get('/hello', [ProductController::class, 'hello']);
-
-/**
  * Handle routes group from /product prefix
  */
 $Router->groupPrefix(BASE_DIR . '/product', function (Router $Router) {
@@ -92,13 +82,14 @@ $Router->groupPrefix(BASE_DIR . '/process', function (Router $Router) {
   $Router->get('/form-update', function () {
     return View::render('/forms/form-process-update');
   });
-  $Router->post('/update', [ProcessController::class, 'updateProcess', $_POST]);
+  $Router->post('/form-update', [ProcessController::class, 'updateProcess', $_POST]);
 
   $Router->get('/form-delete', function () {
     return View::render('/forms/form-process-delete');
   });
 
   $Router->post('/getSearchResult', [ProcessController::class, 'getSearchByKey', $_POST]);
+  $Router->post('/getProcess', [ProcessController::class, 'getProcessById', $_POST]);
 });
 
 /**
