@@ -37,6 +37,17 @@
                 <div id="inv">
                 </div>
 
+                <table>
+                    <tr>
+                        <th>h</th>
+                        <th>b</th>
+                    </tr>
+                    <tr>
+                        <th>213</th>
+                        <th>325</th>
+                    </tr>
+                </table>
+
                 <button class="btn btn-primary m-2" type="submit">Save-Invoice</button>
                 <button class="btn btn-secondary" type="reset">Reset</button>
             </form>
@@ -144,10 +155,10 @@
                     $("#form-add-invoice").append(
                         `
                         <div id=${productId} class="form-group mt-2">
-                            <input type="number" name="product-id" value="${productId}" id="${productId}product-id">
+                            <input type="number" name="product-id" value="${productId}" id="${productId}product-id">                            
+                            <input type="text" name="pname" value="${productName}" id="${productId}product-name" placeholder="Product Name">
                             <input type="text" name="product-dimension" value="" id="${productId}product-dimension" placeholder="Product Dimension">
                             <input type="number" name="product-tdimension" value="" id="${productId}product-tdimension" placeholder="Total Dimension">
-                            <input type="text" name="pname" value="${productName}" id="${productId}product-name" placeholder="Product Name">
                             <input type="number" name="prate" value="${productRate}" id="${productId}product-rate" placeholder="Product Rate">
                             <input type="number" name="pquantity" value="1" id="${productId}product-quantity" placeholder="Product Quantity">
                             <input type="number" name="total" value="${productRate}" id="${productId}product-total" placeholder="Total">

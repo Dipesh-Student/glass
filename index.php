@@ -1,10 +1,18 @@
-<?php 
+<?php
 
-require_once realpath('vendor/autoload.php');
+// use App\View;
 
-// Looing for .env at the root directory
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+// session_start();
 
-header("Location: public/");
-echo "root";
+// require_once 'vendor/autoload.php';
+// require_once 'const.php';
+
+// // Looing for .env at the root directory
+// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
+
+// if(isset($_POST['login'])){
+//     //todo login
+// }else{
+//     View::render('forms/form-login');
+// }

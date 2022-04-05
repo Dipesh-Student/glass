@@ -7,11 +7,6 @@ use App\View;
 
 class ProductController
 {
-
-    public function __construct()
-    {
-    }
-
     public static function homeProduct($param = array())
     {
         return View::render('main-product', $param);
