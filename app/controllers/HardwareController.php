@@ -40,27 +40,29 @@ class HardwareController
     {
         $pm = new HardwareModel();
         echo json_encode($pm->updateHardwareDetails(
-            $param['Hardware-id'],
-            $param['Hardware-name'],
-            $param['Hardware-rate']
+            $param['hardware-id'],
+            $param['hardware-name'],
+            $param['hardware-Desc'],
+            $param['hardware-rate']
         ));
     }
+
     public static function deleteProduct()
     {
         echo "deleteProduct";
     }
 
-    public static function getProductById($param = array())
+    public static function getHardware($param = array())
     {
-        $productId = $param['product-id'];
-        $pm = new ProductModel();
-        echo json_encode($pm->getProductById($productId));
+        $hwId = $param['hw-id'];
+        $pm = new HardwareModel();
+        echo json_encode($pm->getHardwareById($hwId));
     }
 
     public static function getSearchResult($param = array())
     {
         $searchKey = $param['search-key'];
-        $pm = new ProductModel();
+        $pm = new HardwareModel();
         echo json_encode($pm->getSearchKey($searchKey));
     }
 

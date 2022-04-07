@@ -14,15 +14,16 @@ class ProductModel
         $this->connection = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     }
 
-    public function addNewProduct($pname, $pdesc, $prate)
+    public function addNewProduct($pname, $pdesc, $pthickness, $prate)
     {
         try {
             $this->connection->beginTransaction();
-            $sql = "INSERT INTO `product`(`product_name`, `product_desc`, `product_rate`) 
-            VALUES(:pname,:pdesc,:prate)";
+            $sql = "INSERT INTO `product`(`product_name`, `product_desc`,`product_thickness`, `product_rate`) 
+            VALUES(:pname,:pdesc,:pthickness,:prate)";
             $stmt = $this->connection->prepare($sql);
             $stmt->bindParam(':pname', $pname);
             $stmt->bindParam(':pdesc', $pdesc);
+            $stmt->bindParam(':pthickness', $pthickness);
             $stmt->bindParam(':prate', $prate);
 
             $stmt->execute();

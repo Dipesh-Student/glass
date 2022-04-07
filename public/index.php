@@ -59,10 +59,9 @@ if (isset($_SESSION['user']) === false) {
     $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
 
     $Router->get('/form-add', function () {
-      $param = array();
-      $param['d'] = 1;
-      return View::render('/forms/form-product-add', $param);
+      return View::render('/forms/form-product-add', array("pageTitle" => 'Globe | Add Product'));
     });
+
     $Router->get('/form-update', function () {
       $pm = new ProductModel();
       $param = $pm->getProductList(1, 10);
@@ -120,16 +119,16 @@ if (isset($_SESSION['user']) === false) {
     $Router->post('/form-add', [HardwareController::class, 'addHardware', $_POST]);
 
     $Router->get('/form-update', function () {
-      return View::render('/forms/form-process-update', array("pageTitle" => 'Globe | Update process'));
+      return View::render('/forms/form-hardware-update', array("pageTitle" => 'Globe | Update hardware'));
     });
-    $Router->post('/form-update', [ProcessController::class, 'updateProcess', $_POST]);
+    $Router->post('/form-update', [HardwareController::class, 'updateHardware', $_POST]);
 
     $Router->get('/form-delete', function () {
       return View::render('/forms/form-process-delete');
     });
 
-    $Router->post('/getSearchResult', [ProcessController::class, 'getSearchByKey', $_POST]);
-    $Router->post('/getProcess', [ProcessController::class, 'getProcessById', $_POST]);
+    $Router->post('/getSearchResult', [HardwareController::class, 'getSearchResult', $_POST]);
+    $Router->post('/getHardware', [HardwareController::class, 'getHardware', $_POST]);
   });
 
   /**

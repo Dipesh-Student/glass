@@ -40,6 +40,7 @@
                     <th>Id</th>
                     <th>name</th>
                     <th class="fixed-length">Desc</th>
+                    <th>Product Thickness</th>
                     <th>rate</th>
                     <th>Action</th>
                 </tr>
@@ -114,6 +115,7 @@
                     var productId = value['product_id'];
                     var productName = value['product_name'];
                     var productDesc = value['product_desc'];
+                    var productThickness = value['product_thickness'];
                     var productRate = value['product_rate'];
                     var shortDesc = productDesc.slice(0,50);
                     table.append(
@@ -125,6 +127,7 @@
                     ${shortDesc}
                     </button>
                     </th>
+                    <th>${productThickness}</th>
                     <th>${productRate}</th>
                     <th>
                     <a href='http://localhost/glass/public/product/form-update?pid=${productId}'>Edit</a>

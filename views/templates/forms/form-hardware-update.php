@@ -1,23 +1,36 @@
 <?php include(FORM_HEADER); ?>
 
 <main>
-    <h3 class="text-center m-4">Update Process</h3>
+    <h3 class="text-center m-4">Update Hardware</h3>
     <div id="message">
 
     </div>
     <section>
         <div>
 
-            <input type="text" class="form-control mt-4" name="search" id="search-process" placeholder="Search-Process" autocomplete="off">
+            <input type="text" class="form-control mt-4" name="search" id="search-hardware" placeholder="Search-Hardware" autocomplete="off">
             <div class="search-result" id="search-result">
 
             </div>
-            <form id="form-update-process" action="<?= BASE_DIR; ?>/process/update">
-                <input class="form-control mt-4" type="text" name="process-id" id="process-id" placeholder="Process Id" disabled required>
-                <input class="form-control mt-2" type="text" name="process-name" id="process-name" placeholder="Process Name" required>
-                <input class="form-control mt-2" type="number" step="0.01" name="process-rate" id="process-rate" placeholder="Process Rate" required>
+            <form id="form-update-hardware" action="<?= BASE_DIR; ?>/hardware/update">
+                <div class="form-group mt-2">
+                    <label for="hardware-id">Hardware-Id</label>
+                    <input class="form-control" type="text" name="hardware-id" id="hardware-id" disabled required>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="hardware-name">Hardware-name</label>
+                    <input class="form-control" type="text" name="hardware-name" id="hardware-name" placeholder="hardware-Name" required>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="hardware-rate">Hardware-rate</label>
+                    <input class="form-control" type="number" name="hardware-rate" step="0.01" id="hardware-rate" placeholder="hardware-Rate" required>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="hardware-Desc">Hardware-Desc</label>
+                    <textarea class="form-control" name="hardware-Desc" cols="30" rows="4" id="hardware-Desc" placeholder="Hardware Description" required></textarea>
+                </div>
                 <button class="btn btn-primary m-2" type="submit">Update</button>
-                <button class="btn btn-secondary" type="reset">Delete</button>
+                <button class="btn btn-secondary" type="reset">Reset</button>
             </form>
         </div>
     </section>
@@ -28,41 +41,40 @@
         var pageUrl = window.location.search;
         var urlParam = new URLSearchParams(pageUrl);
         if (urlParam.get('pid') != null) {
-            loadProcess(urlParam.get('pid'));
+            loadProduct(urlParam.get('pid'));
         } else {
             //page = urlParam.get('page');
         }
 
-        $("#search-process").keyup(function() {
-            var search_key = $("#search-process").val();
+        $("#search-hardware").keyup(function() {
+            var search_key = $("#search-hardware").val();
             var search_result = $('#search-result');
             search_result.text(search_key);
 
             if (search_key != null) {
 
                 $.ajax({
-                    url: "<?= BASE_DIR; ?>/process/getSearchResult",
+                    url: "<?= BASE_DIR; ?>/hardware/getSearchResult",
                     type: "POST",
                     data: {
                         "search-key": search_key
                     },
                     success: function(result) {
-                        console.log(result);
                         var jsonResult = JSON.parse(result);
                         mydata = jsonResult;
                         $('#search-result').html("");
                         if (jsonResult['data'] != null) {
-                            $.each(jsonResult['data'], function(key, value) {
-                                var processId = value['process_id'];
-                                var processName = value['process_name'];
+                            $.each(jsonResult['data']['data'], function(key, value) {
+                                var hwId = value['hardware_id'];
+                                var hwName = value['hardware_name'];
                                 $('#search-result').append(
                                     `
-                            <button onclick='loadProcess(${processId})'>${processName}</button>
+                            <button onclick='loadHardware(${hwId})'>${hwName}</button>
                             `
                                 );
                             });
                         } else {
-                            $("#form-update-process").trigger('reset');
+                            $("#form-update-hardware").trigger('reset');
                         }
                     },
                     error: function(result) {
@@ -73,27 +85,27 @@
             }
         });
 
-        $("#form-update-process").submit(function(event) {
+        $("#form-update-hardware").submit(function(event) {
             event.preventDefault();
 
-            var data = $("#form-update-process").serialize();
+            var data = $("#form-update-hardware").serialize();
 
             $.ajax({
-                url: "/glass/public/process/form-update",
+                url: "/glass/public/hardware/form-update",
                 type: "POST",
                 data: {
-                    "process-id": $("#process-id").val(),
-                    "process-name": $("#process-name").val(),
-                    "process-rate": $("#process-rate").val()
-
+                    "hardware-id": $("#hardware-id").val(),
+                    "hardware-name": $("#hardware-name").val(),
+                    "hardware-Desc": $("#hardware-Desc").val(),
+                    "hardware-rate": $("#hardware-rate").val()
                 },
                 success: function(result) {
-                    //console.log(result);
+                    console.log(result);
                     var jsonResult = JSON.parse(result);
 
-                    //console.log(jsonResult['message']);
+                    console.log(jsonResult['message']);
 
-                    $("#message").html(result);
+                    $("#message").html(jsonResult['message']);
 
                     setInterval(function() {
                         $("#message").html("");
@@ -107,27 +119,29 @@
 
     });
 
-    function loadProcess(id) {
+    function loadHardware(id) {
         $.ajax({
-            url: "/glass/public/process/getProcess",
+            url: "/glass/public/hardware/getHardware",
             type: "POST",
             data: {
-                "process-id": id
+                "hw-id": id
             },
             success: function(result) {
-                //console.log(result);
+                console.log(result);
                 var jsonResult = JSON.parse(result);
 
-                var data = jsonResult['data'];
+                var data = jsonResult['data']['data'];
 
                 $.each(data, function(key, value) {
-                    var productId = value['process_id'];
-                    var productName = value['process_name'];
-                    var productRate = value['process_rate'];
+                    var hardwareId = value['hardware_id'];
+                    var hardwareName = value['hardware_name'];
+                    var hardwareDesc = value['hardware_desc'];
+                    var hardwareRate = value['hardware_rate'];
 
-                    $("#process-id").val(productId);
-                    $("#process-name").val(productName);
-                    $("#process-rate").val(productRate);
+                    $("#hardware-id").val(hardwareId);
+                    $("#hardware-name").val(hardwareName);
+                    $("#hardware-rate").val(hardwareRate);
+                    $("#hardware-Desc").val(hardwareDesc);
 
                     $("#search-result").html("");
 

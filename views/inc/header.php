@@ -59,8 +59,8 @@
             width: 100%;
             padding: 18px 16px;
             background-color: #FFFFFF;
-            border-radius: 15px;
-            box-shadow: 2px 2px 6px #121212;
+            border-radius: 10px;
+            /* box-shadow: 2px 2px 6px #121212; */
             margin: 5px;
             min-height: 300px;
         }

@@ -101,10 +101,10 @@
 
                 },
                 success: function(result) {
-                    console.log(result);
+                    //console.log(result);
                     var jsonResult = JSON.parse(result);
 
-                    console.log(jsonResult['message']);
+                    //console.log(jsonResult['message']);
 
                     $("#message").html(jsonResult['message']);
 
@@ -128,7 +128,7 @@
                 "product-id": id
             },
             success: function(result) {
-                console.log(result);
+                //console.log(result);
                 var jsonResult = JSON.parse(result);
 
                 var data = jsonResult['data']['data'];

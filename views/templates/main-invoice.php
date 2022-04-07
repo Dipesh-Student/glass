@@ -32,7 +32,7 @@
             </div>
         </div>
         <div>
-            <form id="form-add-invoice" action="<?= BASE_DIR; ?>/product/update">
+            <form id="form-add-invoice" action="<?= BASE_DIR; ?>/invoice/add">
 
                 <div id="inv">
                 </div>
@@ -134,46 +134,57 @@
     });
 
     function loadProduct(id) {
-        $.ajax({
-            url: "/glass/public/product/getProduct",
-            type: "POST",
-            data: {
-                "product-id": id
-            },
-            success: function(result) {
-                //console.log(result);
-                var jsonResult = JSON.parse(result);
+        if ($('#' + id).length) // use this if you are using id to check
+        {
+            alert("You have already added this product");
+        } else {
+            $.ajax({
+                url: "/glass/public/product/getProduct",
+                type: "POST",
+                data: {
+                    "product-id": id
+                },
+                success: function(result) {
+                    //console.log(result);
+                    var jsonResult = JSON.parse(result);
 
-                var data = jsonResult['data']['data'];
+                    var data = jsonResult['data']['data'];
 
-                $.each(data, function(key, value) {
-                    var productId = value['product_id'];
-                    var productName = value['product_name'];
-                    var productDesc = value['product_desc'];
-                    var productRate = value['product_rate'];
+                    $.each(data, function(key, value) {
+                        var productId = value['product_id'];
+                        var productName = value['product_name'];
+                        var productDesc = value['product_desc'];
+                        var productRate = value['product_rate'];
 
-                    $("#form-add-invoice").append(
-                        `
+                        $("#form-add-invoice").append(
+                            `
                         <div id=${productId} class="form-group mt-2">
                             <input type="number" name="product-id" value="${productId}" id="${productId}product-id">                            
                             <input type="text" name="pname" value="${productName}" id="${productId}product-name" placeholder="Product Name">
-                            <input type="text" name="product-dimension" value="" id="${productId}product-dimension" placeholder="Product Dimension">
+                            <input type="text" name="product-length" value="" id="${productId}product-length" placeholder="Product Dimension">
                             <input type="number" name="product-tdimension" value="" id="${productId}product-tdimension" placeholder="Total Dimension">
                             <input type="number" name="prate" value="${productRate}" id="${productId}product-rate" placeholder="Product Rate">
-                            <input type="number" name="pquantity" value="1" id="${productId}product-quantity" placeholder="Product Quantity">
+                            <input type="number" name="pquantity" value="1" id="${productId}product-quantity" onkeyup="quantityChange(${productId})" placeholder="Product Quantity">
                             <input type="number" name="total" value="${productRate}" id="${productId}product-total" placeholder="Total">
                         </div>
                         `
-                    );
+                        );
 
-                    $("#search-result").html("");
+                        $("#search-result").html("");
 
-                });
-            },
-            error: function(result) {
-                console.log(result);
-            }
-        });
+                    });
+                },
+                error: function(result) {
+                    console.log(result);
+                }
+            });
+        }
+    }
+
+    function quantityChange(id) {
+        var rate = $("#" + id + "product-rate").val();
+        var quantity = $("#" + id + "product-quantity").val();
+        $("#" + id + "product-total").val(rate * quantity);
     }
 </script>
 

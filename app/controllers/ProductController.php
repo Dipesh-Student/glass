@@ -22,9 +22,10 @@ class ProductController
     {
         $productName = $param['product-name'];
         $productDesc = $param['product-Desc'];
+        $productThickness = $param['product-thickness'];
         $productRate = $param['product-rate'];
         $pm = new ProductModel;
-        $addProduct = $pm->addNewProduct($productName, $productDesc, $productRate);
+        $addProduct = $pm->addNewProduct($productName, $productDesc, $productThickness, $productRate);
 
         if ($addProduct['error'] != true) {
             $msg = $addProduct['message'];

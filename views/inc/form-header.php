@@ -188,10 +188,22 @@
                             </div>
                         </div>
 
-                        <a href="#" class="nav__link">
-                            <i class='bx bx-message-rounded nav__icon'></i>
-                            <span class="nav__name">Hardware</span>
-                        </a>
+                        <div class="nav__dropdown">
+                            <a href="/glass/public/hardware?page=1" class="nav__link">
+                                <i class='bx bx-user nav__icon'></i>
+                                <span class="nav__name">Hardware</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="/glass/public/hardware/form-add" class="nav__dropdown-item">Add-Hardware</a>
+                                    <a href="/glass/public/hardware/form-update" class="nav__dropdown-item">Update-Hardware</a>
+                                    <a href="/glass/public/hardware/form-delete" class="nav__dropdown-item">Remove-Hardware</a>
+                                </div>
+                            </div>
+                        </div>
+
                         <a href="<?= BASE_DIR; ?>/quotes" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Quotation's</span>
@@ -256,9 +268,13 @@
                 </div>
             </div>
 
-            <a href="#" class="nav__link nav__logout">
+            <a href="/glass/public/logout" class="nav__link nav__logout">
                 <i class='bx bx-log-out nav__icon'></i>
                 <span class="nav__name">Log Out</span>
             </a>
+
+            <!-- <form action="/glass/public/logout" method="post">
+                <input type="submit" value="Logout">
+            </form> -->
         </nav>
     </div>

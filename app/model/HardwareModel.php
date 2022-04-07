@@ -37,18 +37,18 @@ class HardwareModel
         return $returnResult;
     }
 
-    public function updateProductDetails($productId, $productName, $productDesc, $productRate)
+    public function updateHardwareDetails($hwId, $hwName, $hwDesc, $hwRate)
     {
         try {
             $this->connection->beginTransaction();
-            $sql = "UPDATE `product` 
-            SET `product_name`=:pname,`product_desc`=:pdesc,`product_rate`=:prate
-            WHERE `product_id`=:pid";
+            $sql = "UPDATE `hardware` 
+            SET `hardware_name`=:hname,`hardware_desc`=:hdesc,`hardware_rate`=:hrate
+            WHERE `hardware_id`=:hid";
             $stmt = $this->connection->prepare($sql);
-            $stmt->bindParam(':pid', $productId);
-            $stmt->bindParam(':pname', $productName);
-            $stmt->bindParam(':pdesc', $productDesc);
-            $stmt->bindParam(':prate', $productRate);
+            $stmt->bindParam(':hid', $hwId);
+            $stmt->bindParam(':hname', $hwName);
+            $stmt->bindParam(':hdesc', $hwDesc);
+            $stmt->bindParam(':hrate', $hwRate);
 
             $stmt->execute();
             $this->connection->commit();
@@ -87,6 +87,63 @@ class HardwareModel
                 );
             } else {
                 $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No hardware found", 'data' => null);
+            }
+        } catch (PDOException $e) {
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while fetching hardware details', 'data' => null);
+        }
+
+        return $returnResult;
+    }
+
+    public function getSearchKey($searchKey)
+    {
+        if (empty($searchKey)) {
+            $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No products found", 'data' => null);
+            return $returnResult;
+        }
+        $searchKey = '%' . $searchKey . '%';
+        try {
+            $sql = "SELECT * FROM `hardware` WHERE `hardware_name` LIKE :searchKey LIMIT 10;";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':searchKey', $searchKey);
+            $stmt->execute();
+            $totalRecord = $stmt->rowCount();
+
+            if ($stmt->rowCount() != 0) {
+                $returnResult = array(
+                    'error' => false, 'errorDescription' => null, 'message' => "List of Hardware", 'data' => array(
+                        "totalRecords" => $totalRecord,
+                        "data" => $stmt->fetchAll()
+                    )
+                );
+            } else {
+                $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No Hardware found", 'data' => null);
+            }
+        } catch (PDOException $e) {
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while fetching product details', 'data' => null);
+        }
+
+        return $returnResult;
+    }
+
+    public function getHardwareById($hwId)
+    {
+        try {
+            $sql = "SELECT * FROM `hardware` WHERE hardware_id=:hardwareid;";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':hardwareid', $hwId, PDO::PARAM_INT);
+            $stmt->execute();
+            $totalRecord = $stmt->rowCount();
+
+            if ($stmt->rowCount() != 0) {
+                $returnResult = array(
+                    'error' => false, 'errorDescription' => null, 'message' => "Fetched hardware details", 'data' => array(
+                        "totalRecords" => $totalRecord,
+                        "data" => $stmt->fetchAll()
+                    )
+                );
+            } else {
+                $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No phardware found", 'data' => null);
             }
         } catch (PDOException $e) {
             $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while fetching hardware details', 'data' => null);
