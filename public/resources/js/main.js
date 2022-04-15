@@ -24,37 +24,3 @@ function colorLink() {
 }
 
 linkColor.forEach(l => l.addEventListener('click', colorLink))
-
-// function loadProduct(id) {
-//     $.ajax({
-//         url: "/glass/public/product/getProduct",
-//         type: "POST",
-//         data: {
-//             "product-id": id
-//         },
-//         success: function(result) {
-//             console.log(result);
-//             var jsonResult = JSON.parse(result);
-
-//             var data = jsonResult['data']['data'];
-
-//             $.each(data, function(key, value) {
-//                 var productId = value['product_id'];
-//                 var productName = value['product_name'];
-//                 var productDesc = value['product_desc'];
-//                 var productRate = value['product_rate'];
-
-//                 $("#product-id").val(productId);
-//                 $("#product-name").val(productName);
-//                 $("#product-rate").val(productRate);
-//                 $("#product-Desc").val(productDesc);
-
-//                 $("#search-result").html("");
-
-//             });
-//         },
-//         error: function(result) {
-//             console.log(result);
-//         }
-//     });
-// }

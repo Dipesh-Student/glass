@@ -16,3 +16,36 @@
 // }else{
 //     View::render('forms/form-login');
 // }
+
+class A
+{
+    public $name;
+    public $id;
+
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+
+$test = new A();
+
+$x = $test->setId(1)->setName('Fredrick');
+print_r($x);

@@ -18,6 +18,10 @@
         border: 0;
         text-align: left;
     }
+
+    .cus-txt {
+        width: fit-content;
+    }
 </style>
 
 <main>
@@ -26,30 +30,28 @@
     </section>
     <section>
         <div>
-            <input type="text" class="form-control mt-4" name="search" id="search-product" placeholder="Search-Product" autocomplete="off">
-            <div class="search-result" id="search-result">
+            <label for="search-customer">Add Customer</label>
+            <input type="text" class="form-control" name="" id="search-customer" placeholder="Customer name" required>
+            <div class="search-result" id="search-result-customer"></div>
 
-            </div>
+            <label for="search-product">Add Product</label>
+            <input type="text" class="form-control" name="search" id="search-product" placeholder="Search-Product" autocomplete="off">
+            <div class="search-result" id="search-result"></div>
         </div>
-        <div>
-            <form id="form-add-invoice" action="<?= BASE_DIR; ?>/invoice/add">
+        <div class="mt-4" style="border: 1px solid #ccc;padding: 16px;">
+            <form id="form-add-invoice" action="<?= BASE_DIR; ?>/invoice/add" method="POST">
+
+                <input class="cus-txt" type="text" name="customer-id" id="customer-id" placeholder="Customer-Id">
+                <input type="text" name="customer-name" id="customer-name" placeholder="Customer-Name">
+
+                <input type="text" name="challan-id" id="challan-id" placeholder="Challan Id" required>
 
                 <div id="inv">
                 </div>
 
-                <table>
-                    <tr>
-                        <th>h</th>
-                        <th>b</th>
-                    </tr>
-                    <tr>
-                        <th>213</th>
-                        <th>325</th>
-                    </tr>
-                </table>
-
                 <button class="btn btn-primary m-2" type="submit">Save-Invoice</button>
                 <button class="btn btn-secondary" type="reset">Reset</button>
+                <input class="btn btn-secondary" type="button" onclick="myPrint('form-add-invoice')" value="print">
             </form>
         </div>
     </section>
@@ -131,6 +133,57 @@
             });
         });
 
+        // $("#form-add-invoice").submit(function(event){
+        //     event.preventDefault();
+        //     var x = $("#form-add-invoice").serialize();
+        //     console.log(x);
+        // });
+
+        $("#search-customer").keyup(function() {
+            var search_key = $("#search-customer").val();
+            var search_result = $('#search-result-customer');
+            search_result.text(search_key);
+
+            if (search_key != null) {
+
+                $.ajax({
+                    url: "<?= BASE_DIR; ?>/customer/getSearchResult",
+                    type: "POST",
+                    data: {
+                        "search-key": search_key
+                    },
+                    success: function(result) {
+                        //console.log(result);
+                        var jsonResult = JSON.parse(result);
+                        //mydata = jsonResult;
+                        $('#search-result-customer').html("");
+
+                        var data = jsonResult['data'];
+                        console.log(data['data']);
+                        if (jsonResult['data'] != null) {
+                            $.each(jsonResult['data'], function(key, value) {
+                                var customerId = value['customer_id'];
+                                var customerName = value['c_name'];
+
+                                $('#search-result-customer').append(
+                                    `
+                                    <button onclick='loadCustomer(${customerId})'>${customerId}-${customerName}</button>
+                            
+                                    `
+                                );
+                            });
+                        } else {
+                            //$("#form-update-product").trigger('reset');
+                        }
+                    },
+                    error: function(result) {
+                        console.log(result);
+                    }
+                });
+
+            }
+        });
+
     });
 
     function loadProduct(id) {
@@ -156,16 +209,18 @@
                         var productDesc = value['product_desc'];
                         var productRate = value['product_rate'];
 
-                        $("#form-add-invoice").append(
+                        $("#inv").append(
                             `
                         <div id=${productId} class="form-group mt-2">
-                            <input type="number" name="product-id" value="${productId}" id="${productId}product-id">                            
-                            <input type="text" name="pname" value="${productName}" id="${productId}product-name" placeholder="Product Name">
-                            <input type="text" name="product-length" value="" id="${productId}product-length" placeholder="Product Dimension">
-                            <input type="number" name="product-tdimension" value="" id="${productId}product-tdimension" placeholder="Total Dimension">
-                            <input type="number" name="prate" value="${productRate}" id="${productId}product-rate" placeholder="Product Rate">
-                            <input type="number" name="pquantity" value="1" id="${productId}product-quantity" onkeyup="quantityChange(${productId})" placeholder="Product Quantity">
-                            <input type="number" name="total" value="${productRate}" id="${productId}product-total" placeholder="Total">
+                            <input type="number" name="product-id[]" value="${productId}" id="${productId}product-id">                            
+                            <input type="text" name="pname[]" value="${productName}" id="${productId}product-name" placeholder="Product Name">
+                            <input type="text" name="product-length[]" value="" id="${productId}product-length" placeholder="Product Dimension">
+                            <input type="number" name="pquantity[]" value="1" id="${productId}product-quantity" onkeyup="quantityChange(${productId})" placeholder="Product Quantity">
+                            <input type="text" name="work-details[]" value="" id="${productId}work-details" placeholder="Work Details">
+                            <input type="number" name="product-tdimension[]" value="" id="${productId}product-tdimension" placeholder="Total Dimension">
+                            <input type="number" name="prate[]" value="${productRate}" id="${productId}product-rate" placeholder="Product Rate">
+                            
+                            <input type="number" name="total[]" value="${productRate}" id="${productId}product-total" placeholder="Total">
                         </div>
                         `
                         );
@@ -185,6 +240,41 @@
         var rate = $("#" + id + "product-rate").val();
         var quantity = $("#" + id + "product-quantity").val();
         $("#" + id + "product-total").val(rate * quantity);
+    }
+
+    function loadCustomer(customerId) {
+        $.ajax({
+            url: "<?= BASE_DIR; ?>/customer/getCustomer",
+            type: "POST",
+            data: {
+                "customer-id": customerId
+            },
+            success: function(result) {
+                console.log(result);
+                var jsonResult = JSON.parse(result);
+                if (jsonResult['data']) {
+                    var data = jsonResult['data'];
+                    $.each(data, function(key, value) {
+                        var customerId = value['customer_id'];
+                        var customerName = value['c_name'];
+                        var customerContact = value['c_contact'];
+                        var customerEmail = value['c_email'];
+                        var customerAdd = value['c_address'];
+
+                        $("#customer-id").val(customerId);
+                        $("#customer-name").val(customerName);
+                        // $("#customer-contact").val(customerContact);
+                        // $("#customer-email").val(customerEmail);
+                        // $("#customer-address").val(customerAdd);
+
+                        $("#search-result-customer").html("");
+                    });
+                }
+            },
+            error: function(result) {
+                console.log(result)
+            }
+        });
     }
 </script>
 

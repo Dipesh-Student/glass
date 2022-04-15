@@ -117,15 +117,13 @@
                     var productDesc = value['product_desc'];
                     var productThickness = value['product_thickness'];
                     var productRate = value['product_rate'];
-                    var shortDesc = productDesc.slice(0,50);
+                    var shortDesc = productDesc.slice(0, 50);
                     table.append(
                         `<tr>
                     <th>${productId}</th>
                     <th>${productName}</th>
-                    <th class="fixed-length">
-                    <button type="button" class="table-desc" data-toggle="tooltip" data-placement="bottom" title="${productDesc}">
+                    <th>
                     ${shortDesc}
-                    </button>
                     </th>
                     <th>${productThickness}</th>
                     <th>${productRate}</th>
@@ -190,6 +188,7 @@
         $("#right-panel").css("width", "100%");
         $("#right-panel").load("/product/form-" + view);
     }
+
 </script>
 
 

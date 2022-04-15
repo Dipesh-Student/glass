@@ -195,7 +195,10 @@ if (isset($_SESSION['user']) === false) {
 
   $Router->groupPrefix(BASE_DIR . '/invoice', function (Router $Router) {
     $Router->get('', [InvoiceController::class, 'homeInvoice']);
+
+    $Router->post('/add', [InvoiceController::class, 'add', $_POST]);
   });
+
   $Router->run();
 }
 
