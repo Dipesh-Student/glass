@@ -23,8 +23,8 @@ class InvoiceController
 
     public static function add($param = array())
     {
-        echo "<pre>";
-        print_r($param);
+        //echo "<pre>";
+        //print_r($param);
         $invoiceModel = new InvoiceModel();
         $count = 0;
 
@@ -55,5 +55,26 @@ class InvoiceController
             );
             $count++;
         }
+
+        header("Location: /glass/public/invoice");
+    }
+
+    public static function getCustInvByChllaan($param = array())
+    {
+    }
+
+    public static function genBill($param = array())
+    {
+        $products = array();
+
+        $cid = $param['challan-id'];
+
+        $invm = new InvoiceModel();
+
+        foreach ($cid as $val) {
+            $data = $invm->getInvoiceByChallan($val);
+            array_push($products, $data['data']);
+        }
+        echo json_encode($products);
     }
 }

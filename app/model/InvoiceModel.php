@@ -56,12 +56,60 @@ class InvoiceModel
     {
     }
 
+    public function getInvoiceByCustomer($customerId)
+    {
+        try {
+            $sql = "SELECT * FROM `hardware` WHERE hardware_id=:hardwareid;";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':hardwareid', $hwId, PDO::PARAM_INT);
+            $stmt->execute();
+            $totalRecord = $stmt->rowCount();
+
+            if ($stmt->rowCount() != 0) {
+                $returnResult = array(
+                    'error' => false, 'errorDescription' => null, 'message' => "Fetched hardware details", 'data' => array(
+                        "totalRecords" => $totalRecord,
+                        "data" => $stmt->fetchAll()
+                    )
+                );
+            } else {
+                $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No hardware found", 'data' => null);
+            }
+        } catch (PDOException $e) {
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while fetching hardware details', 'data' => null);
+        }
+
+        return $returnResult;
+    }
+
     public function getInvoiceById()
     {
     }
 
-    public function getInvoiceByChallan()
+    public function getInvoiceByChallan($challanId)
     {
+        try {
+            $sql = "SELECT * FROM `invoice` WHERE `iv_challan_id`=:challanid;";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':challanid', $challanId);
+            $stmt->execute();
+            $totalRecord = $stmt->rowCount();
+
+            if ($stmt->rowCount() != 0) {
+                $returnResult = array(
+                    'error' => false, 'errorDescription' => null, 'message' => "Fetched all challan details", 'data' => array(
+                        "totalRecords" => $totalRecord,
+                        "data" => $stmt->fetchAll()
+                    )
+                );
+            } else {
+                $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "No challan found", 'data' => null);
+            }
+        } catch (PDOException $e) {
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while fetching challan details', 'data' => null);
+        }
+
+        return $returnResult;
     }
 
     public function getInvoiceByKey()

@@ -178,9 +178,8 @@ if (isset($_SESSION['user']) === false) {
   /**
    * Handle routes group from /challan prefix
    */
-  $Router->groupPrefix('/challan', function (Router $Router) {
-    $Router->get('', [ChallanController::class, 'homeChallan']);
-    $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
+  $Router->groupPrefix(BASE_DIR . '/challan', function (Router $Router) {
+    $Router->get('', [ChallanController::class, 'homeChallan', array("pageTitle" => 'Globe | Hardware')]);
 
     $Router->get('/form-add', function () {
       return View::render('/forms/form-challan-add');
@@ -191,11 +190,20 @@ if (isset($_SESSION['user']) === false) {
     $Router->get('/form-delete', function () {
       return View::render('/forms/form-challan-delete');
     });
+
+    $Router->post('/retrieveUserChallan', [ChallanController::class, 'getChallanByCustomer', $_POST]);
+    $Router->post('/form-challan-add', [ChallanController::class, 'addNewChallan', $_POST]);
+    $Router->post('/getChallanList', [ChallanController::class, 'getChallanList', $_POST]);
   });
 
   $Router->groupPrefix(BASE_DIR . '/invoice', function (Router $Router) {
     $Router->get('', [InvoiceController::class, 'homeInvoice']);
+    $Router->get('/gen-bill', function () {
+      return View::render('/forms/form-bill');
+    });
 
+    $Router->post('/gen-bill', [InvoiceController::class, 'genBill', $_POST]);
+    $Router->post('/getCustInvByChllaan', [InvoiceController::class, 'getCustInvByChllaan', $_POST]);
     $Router->post('/add', [InvoiceController::class, 'add', $_POST]);
   });
 
