@@ -73,7 +73,7 @@ class InvoiceController
 
         foreach ($cid as $val) {
             $data = $invm->getInvoiceByChallan($val);
-            array_push($products, $data['data']);
+            array_push($products, $data['data']['data']);
         }
         echo json_encode($products);
     }

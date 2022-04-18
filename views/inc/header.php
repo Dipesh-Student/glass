@@ -28,12 +28,28 @@
     <link rel="stylesheet" href="resources/css/style.css">
 
     <script>
-        function myPrint(myform) {
-            var printdata = document.getElementById(myform);
-            newwin = window.open("");
-            newwin.document.write(printdata.outerHTML);
-            newwin.print();
-            newwin.close();
+        // function myPrint(myform) {
+        //     var printdata = document.getElementById(myform);
+        //     newwin = window.open("");
+        //     newwin.document.write(printdata.outerHTML);
+        //     newwin.print();
+        //     newwin.close();
+        // }
+
+        function myPrint() {
+            var divToPrint = document.getElementById('table');
+            var htmlToPrint = '' +
+                '<style type="text/css">' +
+                'table th, table td {' +
+                'border:1px solid #000;' +
+                'padding;0.5em;' +
+                '}' +
+                '</style>';
+            htmlToPrint += divToPrint.outerHTML;
+            newWin = window.open("");
+            newWin.document.write(htmlToPrint);
+            newWin.print();
+            newWin.close();
         }
     </script>
 
@@ -227,7 +243,7 @@
                         <a href="<?= BASE_DIR; ?>/challan?page=1" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Challan</span>
-                        </a>                        
+                        </a>
 
                         <div class="nav__dropdown">
                             <a href="/glass/public/customer?page=1" class="nav__link">

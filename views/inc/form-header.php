@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php
-    if(isset($html_pageTitle)){
-        echo $html_pageTitle;
-    }
-    ?></title>
+            if (isset($html_pageTitle)) {
+                echo $html_pageTitle;
+            }
+            ?></title>
 
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -28,12 +28,27 @@
     <link rel="stylesheet" href="../resources/css/style.css">
 
     <script>
-        function myPrint(myform) {
-            var printdata = document.getElementById(myform);
-            newwin = window.open("");
-            newwin.document.write(printdata.outerHTML);
-            newwin.print();
-            newwin.close();
+        // function myPrint(myform) {
+        //     var printdata = document.getElementById(myform);
+        //     newwin = window.open("");
+        //     newwin.document.write(printdata.outerHTML);
+        //     newwin.print();
+        //     newwin.close();
+        // }
+        function myPrint() {
+            var divToPrint = document.getElementById('inv');
+            var htmlToPrint = '' +
+                '<style type="text/css">' +
+                'table th, table td {' +
+                'border:1px solid grey;' +
+                'padding:1px;' +
+                '}' +
+                '</style>';
+            htmlToPrint += divToPrint.outerHTML;
+            newWin = window.open("");
+            newWin.document.write(htmlToPrint);
+            newWin.print();
+            newWin.close();
         }
     </script>
 
@@ -121,6 +136,7 @@
             border: 0;
             text-align: left;
         }
+
         .search-result button:hover {
             background-color: #d6d8d9;
         }

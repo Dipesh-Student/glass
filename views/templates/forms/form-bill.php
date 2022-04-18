@@ -1,4 +1,12 @@
 <?php include(FORM_HEADER); ?>
+
+<style>
+    th,
+    td {
+        text-align: left;
+        border: 1px solid grey;
+    }
+</style>
 <main>
     <div id="message-div">
 
@@ -20,22 +28,28 @@
                 <button class="btn btn-secondary mt-4" type="reset">Reset</button>
             </form>
 
-            <table class="table" id="gen-bill">
-                <caption>Invoice</caption>
-                <tr class="tr">
-                    <th>Challan Id</th>
-                    <th>ProductName</th>
-                    <th>Product Dimension</th>
-                    <th>Quantity</th>
-                    <th>Work Details</th>
-                    <th>Total Dimension</th>
-                    <th>Std Rate</th>
-                    <th>Total</th>
-                </tr>
-                <div id="inv-total"></div>
-            </table>
-            <input class="btn btn-secondary" type="button" onclick="myPrint('gen-bill')" value="print">
+            <div id="inv">
+                <table class="table" id="gen-bill">
+                    <caption>Invoice</caption>
+                    <tr class="tr">
+                        <th>Challan Id</th>
+                        <th>ProductName</th>
+                        <th>Product Dimension</th>
+                        <th>Quantity</th>
+                        <th>Work Details</th>
+                        <th>Total Dimension</th>
+                        <th>Std Rate</th>
+                        <th>Total</th>
+                    </tr>
+                    <!-- <div id="inv-total"></div> -->
+
+                </table>
+                <span class="text-right" id="inv-total"></span>
+            </div>
+
+            <input class="btn btn-secondary" type="button" onclick="myPrint()" value="print">
             <!-- <textarea class="form-control" name="" id="result" cols="30" rows="10"></textarea> -->
+            <button class="btn btn-secondary" onclick="invoicetotal()">Add Total</button>
         </div>
     </section>
 </main>
@@ -88,21 +102,22 @@
             }
         });
 
-        $("#form-gen-bill").submit(function(event) {
-            event.preventDefault();
-            var data = $("#form-gen-bill").serialize();
-            //console.log(data);
+    }); //end document ready
 
-            $.ajax({
-                url: "<?= BASE_DIR; ?>/invoice/gen-bill",
-                type: "post",
-                data: data,
-                success: function(result) {
-                    var jR = JSON.parse(result);
-                    console.log(jR);
-                    $.each(jR[0]['data'], function(key, value) {
-                        //console.log(value);
-                        
+    $("#form-gen-bill").submit(function(event) {
+        event.preventDefault();
+        var data = $("#form-gen-bill").serialize();
+
+        $.ajax({
+            url: "<?= BASE_DIR; ?>/invoice/gen-bill",
+            type: "post",
+            data: data,
+            success: function(result) {
+                var jR = JSON.parse(result);
+
+                $.each(jR, function(key, nvalue) {
+                    $.each(nvalue, function(key, value) {
+
                         var challanId = value['iv_challan_id'];
                         var productname = value['iv_product_name'];
                         var pdim = value['iv_product_dim'];
@@ -116,41 +131,70 @@
                         $("#gen-bill > tbody:last-child").append(
                             `
                             <tr>
-                            <th>${challanId}</th>
-                            <th>${productname}</th>
-                            <th>${pdim}</th>
-                            <th>${quantity}</th>
-                            <th>${workDetails}</th>
-                            <th>${totalDim}</th>
-                            <th>${stdrate}</th>
-                            <th name="total[]">${total}</th>
+                            <td>${challanId}</td>
+                            <td>${productname}</td>
+                            <td>${pdim}</td>
+                            <td>${quantity}</td>
+                            <td>${workDetails}</td>
+                            <td>${totalDim}</td>
+                            <td>${stdrate}</td>
+                            <td name="total[]">${total}
+                            <input type="hidden" name=t[] value="${total}">
+                            </td>
                             </tr>
                             `
                         );
-
                     });
-                },
-                error: function(result) {
-                    console.log(result);
-                }
+                });
+            },
+            error: function(result) {
+                console.log(result);
+            }
 
-            });
-            //invoicetotal();
         });
+        invoicetotal();
+    });
 
-    }); //end document ready
 
     function invoicetotal() {
         var sum = 0;
-        var total = $('input[name="total[]"]').map(function() {
+        // var cgst = 9;
+        // var sgst = 9;
+        var total = $('input[name="t[]"]').map(function() {
             return this.value;
         }).get();
-        console.log(total);
         $.each(total, function(key, value) {
             sum = parseInt(sum) + parseInt(value);
         });
-        $("#inv-total").text(sum);
+        //console.log(sum);
+        var cgst = percentage(9, sum);
+        var sgst = percentage(9, sum);
+        var finalAmount = parseInt(sum) + parseInt(cgst) + parseInt(sgst);
+        $("#inv-total").html(
+            "AMT Before GST : " + sum +
+            "\nCGST @ 9% : " + cgst +
+            "\nCGST @ 9% : " + sgst +
+            "\nTotal Amount : " + finalAmount
+        );
+
     }
+
+    function percentage(percent, total) {
+        return ((percent / 100) * total).toFixed(2)
+    }
+
+    // function invoicetotal() {
+    //     var sum = 0;
+    //     var total = $('input[name="t[]"]').map(function() {
+    //         return this.value;
+    //     }).get();
+    //     console.log(total);
+    //     $.each(total, function(key, value) {
+    //         sum = parseInt(sum) + parseInt(value);
+    //     });
+    //     //$("#inv-total").text(sum);
+    //     console.log(sum);
+    // }
 
     function loadCustomer(customerId) {
         retrieveChallanByCustomerId(customerId);
