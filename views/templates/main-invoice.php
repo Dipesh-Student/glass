@@ -68,9 +68,7 @@
                 </div>
 
             </form>
-            <div id="inv-total">
-
-            </div>
+            <div id="inv-total"></div>
         </div>
 
     </section>
