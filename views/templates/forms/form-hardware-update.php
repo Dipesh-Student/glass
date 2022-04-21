@@ -41,7 +41,7 @@
         var pageUrl = window.location.search;
         var urlParam = new URLSearchParams(pageUrl);
         if (urlParam.get('pid') != null) {
-            loadProduct(urlParam.get('pid'));
+            loadHardware(urlParam.get('pid'));
         } else {
             //page = urlParam.get('page');
         }
@@ -60,6 +60,7 @@
                         "search-key": search_key
                     },
                     success: function(result) {
+                        console.log(result);
                         var jsonResult = JSON.parse(result);
                         mydata = jsonResult;
                         $('#search-result').html("");

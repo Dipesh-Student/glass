@@ -44,9 +44,11 @@ class ProductController
             $param['product-rate']
         ));
     }
-    public static function deleteProduct()
+    public static function delProduct($param = array())
     {
-        echo "deleteProduct";
+        $pm = new ProductModel();
+        $delproduct = $pm->deleteProduct($param['product-id']);
+        echo json_encode($delproduct['message']);
     }
 
     public static function getProductById($param = array())

@@ -468,15 +468,7 @@
                 $.each(data, function(key, value) {
                     var productId = value['hardware_id'];
                     var productName = value['hardware_name'];
-                    //var hardwareDesc = value['hardware_desc'];
                     var productRate = value['hardware_rate'];
-
-                    // $("#hardware-id").val(hardwareId);
-                    // $("#hardware-name").val(hardwareName);
-                    // $("#hardware-rate").val(hardwareRate);
-                    // $("#hardware-Desc").val(hardwareDesc);
-
-                    //console.log(hardwareId + hardwareName + hardwareRate);
 
                     $("#inv").append(
                         `
@@ -498,6 +490,7 @@
                     $("#search-result-hardware").html("");
 
                 });
+                invoicetotal();
             },
             error: function(result) {
                 console.log(result);

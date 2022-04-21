@@ -151,7 +151,7 @@
         <div class="header__container">
             <img src="#" alt="" class="header__img">
 
-            <a href="#" class="header__logo">Globe</a>
+            <a href="#" class="header__logo" style="color: #c6c8ca;">GlassHouse</a>
 
             <div class="header__search">
                 <input type="search" placeholder="Search" class="header__input">
@@ -159,7 +159,7 @@
             </div>
 
             <div class="header__toggle">
-                <i class='bx bx-menu' id="header-toggle"></i>
+                <i class='bx bx-menu' id="header-toggle" style="color: #c6c8ca;"></i>
             </div>
         </div>
     </header>
@@ -170,7 +170,7 @@
             <div>
                 <a href="#" class="nav__link nav__logo">
                     <i class='bx bxs-disc nav__icon'></i>
-                    <span class="nav__logo-name">Globe</span>
+                    <span class="nav__logo-name">Glass House</span>
                 </a>
 
                 <div class="nav__list">
@@ -236,7 +236,7 @@
                             </div>
                         </div>
 
-                        <a href="<?= BASE_DIR; ?>/quotes" class="nav__link">
+                        <a class="link-disabled" href="<?= BASE_DIR; ?>/quotes" class="nav__link" hidden>
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Quotation's</span>
                         </a>
@@ -261,42 +261,21 @@
                             </div>
                         </div>
 
-                        <a href="<?= BASE_DIR; ?>/invoice" class="nav__link">
-                            <i class='bx bx-message-rounded nav__icon'></i>
-                            <span class="nav__name">Bill/Invoice</span>
-                        </a>
-                    </div>
-
-                    <div class="nav__items">
-                        <h3 class="nav__subtitle">Menu</h3>
-
                         <div class="nav__dropdown">
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-bell nav__icon'></i>
-                                <span class="nav__name">Notifications</span>
+                            <a href="<?= BASE_DIR; ?>/invoice" class="nav__link">
+                                <i class='bx bx-user nav__icon'></i>
+                                <span class="nav__name">Bill/Invoice</span>
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
                             </a>
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="#" class="nav__dropdown-item">Blocked</a>
-                                    <a href="#" class="nav__dropdown-item">Silenced</a>
-                                    <a href="#" class="nav__dropdown-item">Publish</a>
-                                    <a href="#" class="nav__dropdown-item">Program</a>
+                                    <a href="<?= BASE_DIR; ?>/invoice/gen-bill" class="nav__dropdown-item">Generate-Bill</a>
                                 </div>
                             </div>
-
                         </div>
-
-                        <a href="#" class="nav__link">
-                            <i class='bx bx-compass nav__icon'></i>
-                            <span class="nav__name">Explore</span>
-                        </a>
-                        <a href="#" class="nav__link">
-                            <i class='bx bx-bookmark nav__icon'></i>
-                            <span class="nav__name">Saved</span>
-                        </a>
                     </div>
+
                 </div>
             </div>
 

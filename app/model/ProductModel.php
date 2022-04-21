@@ -63,6 +63,26 @@ class ProductModel
         return $returnResult;
     }
 
+    public function deleteProduct($productId)
+    {
+        try {
+            $this->connection->beginTransaction();
+            $sql = "DELETE FROM `product` WHERE `product_id`=:pid";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':pid', $productId);
+
+            $stmt->execute();
+            $this->connection->commit();
+
+            $returnResult = array('error' => false, 'errorDescription' => null, 'message' => "Product Deleted", 'data' => null);
+        } catch (PDOException $e) {
+            $this->connection->rollBack();
+            $returnResult = array('error' => true, 'errorDescription' => $e->getMessage(), 'message' => 'Error occured while deleting product', 'data' => null);
+        }
+
+        return $returnResult;
+    }
+
     public function getProductById($productId)
     {
         try {

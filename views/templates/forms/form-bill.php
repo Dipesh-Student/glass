@@ -28,23 +28,28 @@
                 <button class="btn btn-secondary mt-4" type="reset">Reset</button>
             </form>
 
-            <div id="inv">
+            <div id="inv" style="margin: 00.5em;">
                 <table class="table" id="gen-bill">
-                    <caption>Invoice</caption>
-                    <tr class="tr">
-                        <th>Challan Id</th>
-                        <th>ProductName</th>
-                        <th>Product Dimension</th>
-                        <th>Quantity</th>
-                        <th>Work Details</th>
-                        <th>Total Dimension</th>
-                        <th>Std Rate</th>
-                        <th>Total</th>
-                    </tr>
+                    <thead>
+                        <caption>Invoice</caption>
+                        <tr class="tr">
+                            <th>Challan Id</th>
+                            <th>ProductName</th>
+                            <th>Product Dimension</th>
+                            <th>Quantity</th>
+                            <th>Work Details</th>
+                            <th>Total Dimension</th>
+                            <th>Std Rate</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+
                     <!-- <div id="inv-total"></div> -->
 
                 </table>
-                <span class="text-right" id="inv-total"></span>
+                <div>
+                    <span class="span-total" id="inv-total" style="display: flex;justify-content: end;text-align:end"></span>
+                </div>
             </div>
 
             <input class="btn btn-secondary" type="button" onclick="myPrint()" value="print">
@@ -115,6 +120,8 @@
             success: function(result) {
                 var jR = JSON.parse(result);
 
+                $("#gen-bill tbody").children('tr:not(:first)').html("");
+
                 $.each(jR, function(key, nvalue) {
                     $.each(nvalue, function(key, value) {
 
@@ -146,35 +153,34 @@
                         );
                     });
                 });
+                invoicetotal();
             },
             error: function(result) {
                 console.log(result);
             }
 
         });
-        invoicetotal();
+
     });
 
 
     function invoicetotal() {
+        $("#inv-total").html("");
         var sum = 0;
-        // var cgst = 9;
-        // var sgst = 9;
         var total = $('input[name="t[]"]').map(function() {
             return this.value;
         }).get();
         $.each(total, function(key, value) {
             sum = parseInt(sum) + parseInt(value);
         });
-        //console.log(sum);
         var cgst = percentage(9, sum);
         var sgst = percentage(9, sum);
         var finalAmount = parseInt(sum) + parseInt(cgst) + parseInt(sgst);
         $("#inv-total").html(
             "AMT Before GST : " + sum +
-            "\nCGST @ 9% : " + cgst +
-            "\nCGST @ 9% : " + sgst +
-            "\nTotal Amount : " + finalAmount
+            "<br>CGST @ 9% : " + cgst +
+            "<br>CGST @ 9% : " + sgst +
+            "<br>Total Amount : " + finalAmount
         );
 
     }
@@ -182,19 +188,6 @@
     function percentage(percent, total) {
         return ((percent / 100) * total).toFixed(2)
     }
-
-    // function invoicetotal() {
-    //     var sum = 0;
-    //     var total = $('input[name="t[]"]').map(function() {
-    //         return this.value;
-    //     }).get();
-    //     console.log(total);
-    //     $.each(total, function(key, value) {
-    //         sum = parseInt(sum) + parseInt(value);
-    //     });
-    //     //$("#inv-total").text(sum);
-    //     console.log(sum);
-    // }
 
     function loadCustomer(customerId) {
         retrieveChallanByCustomerId(customerId);

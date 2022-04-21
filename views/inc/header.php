@@ -11,7 +11,7 @@
             }
             ?></title>
 
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script> -->
 
@@ -42,7 +42,12 @@
                 '<style type="text/css">' +
                 'table th, table td {' +
                 'border:1px solid #000;' +
-                'padding;0.5em;' +
+                'padding:0.5em;' +
+                '}' +
+                '.span-total{' +
+                'display:flex;' +
+                'justify-content:end;' +
+                'text-align:end;'+
                 '}' +
                 '</style>';
             htmlToPrint += divToPrint.outerHTML;
@@ -141,6 +146,10 @@
         .search-result button:hover {
             background-color: #d6d8d9;
         }
+
+        .link-disabled{
+            pointer-events: none;
+        }
     </style>
 
 </head>
@@ -151,7 +160,7 @@
         <div class="header__container">
             <img src="#" alt="" class="header__img">
 
-            <a href="#" class="header__logo">Globe</a>
+            <a href="#" class="header__logo" style="color: #c6c8ca;">GlassHouse</a>
 
             <div class="header__search">
                 <input type="search" placeholder="Search" class="header__input">
@@ -159,7 +168,7 @@
             </div>
 
             <div class="header__toggle">
-                <i class='bx bx-menu' id="header-toggle"></i>
+                <i class='bx bx-menu' id="header-toggle" style="color: #c6c8ca;"></i>
             </div>
         </div>
     </header>
@@ -170,7 +179,7 @@
             <div>
                 <a href="#" class="nav__link nav__logo">
                     <i class='bx bxs-disc nav__icon'></i>
-                    <span class="nav__logo-name">Globe</span>
+                    <span class="nav__logo-name">Glass House</span>
                 </a>
 
                 <div class="nav__list">
@@ -236,7 +245,7 @@
                             </div>
                         </div>
 
-                        <a href="<?= BASE_DIR; ?>/quotes" class="nav__link">
+                        <a class="link-disabled" href="<?= BASE_DIR; ?>/quotes" class="nav__link" hidden>
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Quotation's</span>
                         </a>
@@ -276,36 +285,6 @@
                         </div>
                     </div>
 
-                    <div class="nav__items">
-                        <h3 class="nav__subtitle">Menu</h3>
-
-                        <div class="nav__dropdown">
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-bell nav__icon'></i>
-                                <span class="nav__name">Notifications</span>
-                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
-                            </a>
-
-                            <div class="nav__dropdown-collapse">
-                                <div class="nav__dropdown-content">
-                                    <a href="#" class="nav__dropdown-item">Blocked</a>
-                                    <a href="#" class="nav__dropdown-item">Silenced</a>
-                                    <a href="#" class="nav__dropdown-item">Publish</a>
-                                    <a href="#" class="nav__dropdown-item">Program</a>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <a href="#" class="nav__link">
-                            <i class='bx bx-compass nav__icon'></i>
-                            <span class="nav__name">Explore</span>
-                        </a>
-                        <a href="#" class="nav__link">
-                            <i class='bx bx-bookmark nav__icon'></i>
-                            <span class="nav__name">Saved</span>
-                        </a>
-                    </div>
                 </div>
             </div>
 

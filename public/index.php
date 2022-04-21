@@ -77,6 +77,7 @@ if (isset($_SESSION['user']) === false) {
     $Router->post('/getProduct', [ProductController::class, 'getProductById', $_POST]);
     $Router->post('/getProductList', [ProductController::class, 'fetchAllProducts', $_POST]);
     $Router->post('/getSearchResult', [ProductController::class, 'getSearchResult', $_POST]);
+    $Router->post('/delProduct', [ProductController::class, 'delProduct', $_POST]);
   });
 
   /**
@@ -160,7 +161,7 @@ if (isset($_SESSION['user']) === false) {
   /**
    * Handle routes group from /quotation prefix
    */
-  $Router->groupPrefix('/quotes', function (Router $Router) {
+  $Router->groupPrefix(BASE_DIR.'/quotes', function (Router $Router) {
     $Router->get('', [QuoteController::class, 'homeQuotes']);
     $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
 
@@ -173,6 +174,10 @@ if (isset($_SESSION['user']) === false) {
     $Router->get('/form-delete', function () {
       return View::render('/forms/form-quote-delete');
     });
+
+    $Router->post('/retrieveUserChallan', [QuoteController::class, 'getChallanByCustomer', $_POST]);
+    $Router->post('/form-quote-add', [QuoteController::class, 'addNewQuotation', $_POST]);
+    $Router->post('/getQuoteList', [QuoteController::class, 'getQuoteList', $_POST]);
   });
 
   /**

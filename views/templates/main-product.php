@@ -129,7 +129,7 @@
                     <th>${productRate}</th>
                     <th>
                     <a href='http://localhost/glass/public/product/form-update?pid=${productId}'>Edit</a>
-                    <button class="btn btn-outline-danger m-2">Delete</button>
+                    <button class="btn btn-outline-danger m-2" onclick="delProduct(${productId});">Delete</button>
                     </th>
                     </tr>`
                     );
@@ -183,12 +183,30 @@
         });
     });
 
+    function delProduct(productId) {
+        if (confirm("This will delete record Permanently.")) {
+            txt = "You pressed OK!";
+            $.ajax({
+                url: "<?= BASE_DIR; ?>/product/delProduct",
+                type: "POST",
+                data: {
+                    "product-id": productId
+                },
+                success: function(result) {
+                    console.log(result);
+                },
+                error: function(result) {
+                    console.log(result);
+                }
+            });
+        }
+    }
+
     function load(view) {
         $("#right-panel").show(true);
         $("#right-panel").css("width", "100%");
         $("#right-panel").load("/product/form-" + view);
     }
-
 </script>
 
 
