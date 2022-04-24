@@ -217,6 +217,7 @@ if (isset($_SESSION['user']) === false) {
     });
 
     $Router->post('/gen-bill', [InvoiceController::class, 'genBill', $_POST]);
+    //$Router->post('/gen-inv-bill',[QuoteController::class,'genQuotationBill']);
     $Router->post('/gen-quote-bill', [QuoteController::class, 'genQuotationBill', $_POST]);
     $Router->post('/getCustInvByChllaan', [InvoiceController::class, 'getCustInvByChllaan', $_POST]);
     $Router->post('/add', [InvoiceController::class, 'add', $_POST]);
