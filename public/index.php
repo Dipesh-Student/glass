@@ -161,9 +161,13 @@ if (isset($_SESSION['user']) === false) {
   /**
    * Handle routes group from /quotation prefix
    */
-  $Router->groupPrefix(BASE_DIR.'/quotes', function (Router $Router) {
+  $Router->groupPrefix(BASE_DIR . '/quotes', function (Router $Router) {
     $Router->get('', [QuoteController::class, 'homeQuotes']);
     $Router->get('/{oprn}', [ProductController::class, 'homeProduct']);
+
+    $Router->get('/gen-quotation', function () {
+      return View::render('/forms/form-quotation');
+    });
 
     $Router->get('/form-add', function () {
       return View::render('/forms/form-quote-add');
@@ -177,6 +181,7 @@ if (isset($_SESSION['user']) === false) {
 
     $Router->post('/retrieveUserChallan', [QuoteController::class, 'getChallanByCustomer', $_POST]);
     $Router->post('/form-quote-add', [QuoteController::class, 'addNewQuotation', $_POST]);
+    $Router->post('/add', [QuoteController::class, 'createQuotation', $_POST]);
     $Router->post('/getQuoteList', [QuoteController::class, 'getQuoteList', $_POST]);
   });
 
@@ -197,6 +202,7 @@ if (isset($_SESSION['user']) === false) {
     });
 
     $Router->post('/retrieveUserChallan', [ChallanController::class, 'getChallanByCustomer', $_POST]);
+    $Router->post('/retrieveUserQuoteChallan', [QuoteController::class, 'getChallanByCustomer', $_POST]);
     $Router->post('/form-challan-add', [ChallanController::class, 'addNewChallan', $_POST]);
     $Router->post('/getChallanList', [ChallanController::class, 'getChallanList', $_POST]);
   });
@@ -206,8 +212,12 @@ if (isset($_SESSION['user']) === false) {
     $Router->get('/gen-bill', function () {
       return View::render('/forms/form-bill');
     });
+    $Router->get('/gen-inv-quote', function () {
+      return View::render('/forms/form-bill-quote');
+    });
 
     $Router->post('/gen-bill', [InvoiceController::class, 'genBill', $_POST]);
+    $Router->post('/gen-quote-bill', [QuoteController::class, 'genQuotationBill', $_POST]);
     $Router->post('/getCustInvByChllaan', [InvoiceController::class, 'getCustInvByChllaan', $_POST]);
     $Router->post('/add', [InvoiceController::class, 'add', $_POST]);
   });

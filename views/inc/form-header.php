@@ -236,10 +236,25 @@
                             </div>
                         </div>
 
-                        <a class="link-disabled" href="<?= BASE_DIR; ?>/quotes" class="nav__link" hidden>
+                        <!-- <a href="/quotes" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Quotation's</span>
-                        </a>
+                        </a> -->
+                        <div class="nav__dropdown">
+                            <a href="<?= BASE_DIR; ?>/quotes" class="nav__link">
+                                <i class='bx bx-user nav__icon'></i>
+                                <span class="nav__name">Quotation's</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="<?= BASE_DIR; ?>/quotes/gen-quotation" class="nav__dropdown-item">Generate-Quotation</a>
+                                    <a href="<?= BASE_DIR; ?>/invoice/gen-inv-quote" class="nav__dropdown-item">Invoice-Quotation</a>
+                                </div>
+                            </div>
+                        </div>
+
                         <a href="<?= BASE_DIR; ?>/challan?page=1" class="nav__link">
                             <i class='bx bx-message-rounded nav__icon'></i>
                             <span class="nav__name">Challan</span>
